@@ -9,7 +9,6 @@ class PenggunaModel extends Model
 {
     use HasFactory;
 
-
     protected $table = 'jenis_pengguna';
     protected $primaryKey = 'id_jenis_pengguna';
 

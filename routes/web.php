@@ -8,6 +8,7 @@ use App\Http\Controllers\DosenA\DashboardControllerDA;
 use App\Http\Controllers\DosenP\DashboardControllerDP;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\PenggunaController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,10 @@ Route::prefix('kegiatanAg')->group(function () {
 Route::prefix('pengguna')->group(function () {
     Route::get('/', [PenggunaController::class, 'index'])->name('pengguna.index');
     Route::post('/list', [PenggunaController::class, 'list'])->name('pengguna.list');
+});
+Route::prefix('user')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+    Route::post('/list', [UserController::class, 'list'])->name('user.list');
 });
 // Route::get('/', [DashboardControllerDA::class, 'index']);
 
