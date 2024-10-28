@@ -48,7 +48,12 @@
             $('#userTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ url("admin/user/list") }}'
+                ajax: '{{ url("admin/user/list") }}',
+                    url: 
+                    type: 'POST',
+                    data: function (d) {
+                        d._token = '{{ csrf_token() }}';
+                    }
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'nama', name: 'nama' },

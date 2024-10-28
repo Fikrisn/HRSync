@@ -47,7 +47,13 @@
             $('#penggunaTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ url("admin/pengguna/list") }}'
+                ajax: {
+                    url: '{{ route('pengguna.list') }}',
+                    type: 'POST',
+                    data: function (d) {
+                        d._token = '{{ csrf_token() }}';
+                    }
+                },
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'nama_jenis_pengguna', name: 'nama_jenis_pengguna' },

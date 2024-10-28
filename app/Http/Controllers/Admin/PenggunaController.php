@@ -11,11 +11,11 @@ class PenggunaController extends Controller
 {
     public function index(){
         $breadcrumb = (object)[
-            'title'=>'Jenis Pengguna',
+            'title'=>'Daftar Jenis Pengguna',
             'list'=>['Home','pengguna']
         ];
         $page = (object)[
-            'title'=>'Daftar Pengguna yang terdaftar dalam sistem '
+            'title'=>'Daftar Jenis Pengguna yang terdaftar dalam sistem '
         ];
         $activeMenu ='pengguna';
         return view('Admin.pengguna.index',['breadcrumb'=>$breadcrumb,'page'=>$page,'activeMenu'=>$activeMenu]);
