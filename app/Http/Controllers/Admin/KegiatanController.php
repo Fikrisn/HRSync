@@ -9,6 +9,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class KegiatanController extends Controller
 {
+
+    
     public function index(){
         $breadcrumb = (object)[
             'title'=>'Daftar Kegiatan',
