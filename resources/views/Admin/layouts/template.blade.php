@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name', 'HRSync') }}</title>
+  <link rel="icon" href="{{ asset('polinema.png') }}" type="image/png">
+  <title>{{ $title ?? 'Default Title' }}</title>
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
