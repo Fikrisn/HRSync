@@ -34,26 +34,20 @@
         </li>
       <li class="nav-header">Kegiatan</li>
       <li class="nav-item">
-        <a href="{{ url('/kegiatanAg')}}" class="nav-link {{($activeMenu == 'kegiatanAg')? 'active' : ''}}">
+        <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'kegiatan')? 'active' : ''}}">
           <i class="nav-icon fas fa-bookmark"></i>
-          <p>Kegiatan Agenda</p>
+          <p>Kegiatan</p>
         </a>
       </li>
+      <li class="nav-header">Repositori</li>
       <li class="nav-item">
-        <a href="{{ url('/barang')}}" class="nav-link {{($activeMenu == 'barang')? 'active' : ''}}">
-          <i class="nav-icon fas fa-list-alt"></i>
-          <p>Kegiatan Progress</p>
-        </a>
-      </li>
-      <li class="nav-header">Repository</li>
-      <li class="nav-item">
-        <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
+        <a href="{{ url('/suratTugas')}}" class="nav-link {{($activeMenu == 'suratTugas')? 'active' : ''}}">
           <i class="nav-icon fas fa-cubes"></i>
           <p>Surat Tugas</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/penjualan')}}" class="nav-link {{($activeMenu == 'penjualan')? 'active' : ''}}">
+        <a href="{{ url('/proposal')}}" class="nav-link {{($activeMenu == 'penjualan')? 'active' : ''}}">
           <i class="nav-icon fas fa-cash-register"></i>
           <p>Proposal Tugas</p>
         </a>
