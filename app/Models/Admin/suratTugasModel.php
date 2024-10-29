@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\suratTugasModel;
 use Yajra\DataTables\Facades\DataTables;
 
+// haii aku nurrr
 class SuratTugasModel extends Model
 {
     use HasFactory;
