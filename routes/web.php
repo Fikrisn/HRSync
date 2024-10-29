@@ -31,7 +31,10 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 // Route::get('/', [DashboardControllerP::class, 'index']);
 
 Route::get('/', [DashboardControllerA::class, 'index']);
-
+Route::prefix('kegiatan')->group(function () {
+    Route::get('/', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('/list', [KegiatanController::class, 'list'])->name('kegiatan.list');
+});
 Route::prefix('pengguna')->group(function () {
     Route::get('/', [PenggunaController::class, 'index'])->name('pengguna.index');
     Route::post('/list', [PenggunaController::class, 'list'])->name('pengguna.list');
@@ -46,11 +49,12 @@ Route::prefix('suratTugas')->group(function () {
     Route::post('/list', [SuratTugasController::class, 'list'])->name('suratTugas.list');
 });
 
-Route::get('/kegiatanAg', [KegiatanController::class, 'index'])->name('kegiatanAg.index');
-Route::get('/kegiatanDosen', [KegiatanController::class, 'index'])->name('kegiatanDosen.index');
+Route::prefix('kegiatan')->group(function () {
+    Route::get('/', [kegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::post('/list', [kegiatanController::class, 'list'])->name('kegiatan.list');
+});
 
-Route::get('/kegiatanAg/list', [KegiatanController::class, 'list'])->name('kegiatanAg.list');
-Route::get('/kegiatanDosen/list', [KegiatanController::class, 'list'])->name('kegiatanDosen.list');
+
 
 // Route::get('/', [DashboardControllerDA::class, 'index']);
 

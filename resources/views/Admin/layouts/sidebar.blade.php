@@ -34,15 +34,9 @@
         </li>
       <li class="nav-header">Kegiatan</li>
       <li class="nav-item">
-        <a href="{{ url('/kegiatanAg')}}" class="nav-link {{($activeMenu == 'kegiatanAg')? 'active' : ''}}">
+        <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'kegiatan')? 'active' : ''}}">
           <i class="nav-icon fas fa-bookmark"></i>
-          <p>Kegiatan Agenda</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url('/kegiatanDosen')}}" class="nav-link {{($activeMenu == 'kegiatanDosen')? 'active' : ''}}">
-          <i class="nav-icon fas fa-bookmark"></i>
-          <p>Kegiatan Dosen</p>
+          <p>Kegiatan</p>
         </a>
       </li>
       <li class="nav-header">Repositori</li>
