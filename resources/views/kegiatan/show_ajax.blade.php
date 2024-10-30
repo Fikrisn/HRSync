@@ -65,7 +65,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Deskripsi Kegiatan</h5>
                     {{-- <p>{{ $penjualan->deskripsi_kegiatan }}</p> --}}
                     
-                    <<h5 class="modal-title" id="exampleModalLabel">Saran</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Saran</h5>
                     {{-- <p>{{ $penjualan->saran }}</p> --}}
                     
                     <h5 class="modal-title" id="exampleModalLabel"> Dokumentasi</h5>

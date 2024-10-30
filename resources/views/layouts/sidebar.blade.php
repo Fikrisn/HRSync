@@ -20,21 +20,20 @@
         </a>
       </li>
       @if(auth()->user()->level->level_kode == "ADM")
-      <li class="nav-header">Data Pengguna</li>
         <li class="nav-item">
           <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
-            <i class="nav-icon fas fa-layer-group"></i>
+            <i class="nav-icon fa-solid fa-users-gear"></i>
             <p>Jenis Pengguna</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="{{ url('/user')}}" class="nav-link {{($activeMenu == 'user')? 'active' : ''}}">
-            <i class="nav-icon fas fa-user"></i>
+            <i class="nav-icon far fa-address-book"></i>
             <p>Data Dosen</p>
           </a>
         </li>
       <li class="nav-item">
-        <a href="{{ url('/penjualan')}}" class="nav-link {{($activeMenu == 'penjualan')? 'active' : ''}}">
+        <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'penjualan')? 'active' : ''}}">
           <i class="nav-icon fas fa-bookmark"></i>
           <p>Kegiatan</p>
         </a>
@@ -80,7 +79,6 @@
           </a>
         </li>
       @endif
-      
     </ul>
   </nav>
 </div>

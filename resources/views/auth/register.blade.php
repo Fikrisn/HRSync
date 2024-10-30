@@ -18,16 +18,16 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="card card-outline card-primary">
-            <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a></div>
+            <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>HRSync</b></a></div>
             <div class="card-body">
                 <p class="login-box-msg">Registrasi Pengguna Baru</p>
                 <form method="POST" action="{{ url('/register') }}" id="form-register">
                     @csrf
                     <div class="input-group mb-3">
-                        <select class="form-control" id="level_id" name="level_id" required>
-                            <option value="">- Pilih Level -</option>
-                            @foreach ($level as $item)
-                                <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
+                        <select class="form-control" id="id_jenis_pengguna" name="id_jenis_pengguna" required>
+                            <option value="">- Pilih Jenis Pengguna -</option>
+                            @foreach ($jenisPengguna as $item)
+                                <option value="{{ $item->id_jenis_pengguna }}">{{ $item->nama_jenis_pengguna }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append">
@@ -35,7 +35,7 @@
                                 <span class="fas fa-layer-group"></span>
                             </div>
                         </div>
-                        @error('level_id')
+                        @error('id_jenis_pengguna')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -102,91 +102,91 @@
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-    $("#form-register").validate({
-        rules: {
-            level_id: {
-                required: true,
-            },
-            username: {
-                required: true,
-                minlength: 4,
-                maxlength: 20
-            },
-            nama: {
-                required: true,
-                maxlength: 255
-            },
-            password: {
-                required: true,
-                minlength: 6,
-            },
-            terms: {
-                required: true
-            }
-        },
-        messages: {
-            level_id: {
-                required: "Level wajib dipilih"
-            },
-            username: {
-                required: "Username wajib diisi",
-                minlength: "Username minimal 4 karakter",
-                maxlength: "Username maksimal 20 karakter"
-            },
-            nama: {
-                required: "Nama wajib diisi",
-                maxlength: "Nama maksimal 255 karakter"
-            },
-            password: {
-                required: "Password wajib diisi",
-                minlength: "Password minimal 6 karakter"
-            },
-            terms: {
-                required: "Anda harus menyetujui syarat dan ketentuan"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass('text-danger');
-            error.insertAfter(element.closest('.input-group'));
-            setTimeout(function() {
-                error.addClass('active'); // Aktifkan transisi
-            }, 100); // Delay untuk transisi
-        },
-        highlight: function(element) {
-            $(element).addClass('error'); // Tambah kelas error
-        },
-        unhighlight: function(element) {
-            $(element).removeClass('error'); // Hapus kelas error
-            $(element).next('.error-text').removeClass('active').fadeOut(); // Hilangkan pesan error
-        },
-        submitHandler: function(form) {
-            $.ajax({
-                url: form.action,
-                type: form.method,
-                data: $(form).serialize(),
-                success: function(response) {
-                    if (response.status) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message,
-                        }).then(function() {
-                            window.location = response.redirect;
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Terjadi Kesalahan',
-                            text: response.message
-                        });
+            $("#form-register").validate({
+                rules: {
+                    id_jenis_pengguna: {
+                        required: true,
+                    },
+                    username: {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 20
+                    },
+                    nama: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    terms: {
+                        required: true
                     }
+                },
+                messages: {
+                    id_jenis_pengguna: {
+                        required: "Jenis pengguna wajib dipilih"
+                    },
+                    username: {
+                        required: "Username wajib diisi",
+                        minlength: "Username minimal 4 karakter",
+                        maxlength: "Username maksimal 20 karakter"
+                    },
+                    nama: {
+                        required: "Nama wajib diisi",
+                        maxlength: "Nama maksimal 255 karakter"
+                    },
+                    password: {
+                        required: "Password wajib diisi",
+                        minlength: "Password minimal 6 karakter"
+                    },
+                    terms: {
+                        required: "Anda harus menyetujui syarat dan ketentuan"
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.closest('.input-group'));
+                    setTimeout(function() {
+                        error.addClass('active'); // Aktifkan transisi
+                    }, 100); // Delay untuk transisi
+                },
+                highlight: function(element) {
+                    $(element).addClass('error'); // Tambah kelas error
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass('error'); // Hapus kelas error
+                    $(element).next('.error-text').removeClass('active').fadeOut(); // Hilangkan pesan error
+                },
+                submitHandler: function(form) {
+                    console.log($(form).serialize()); // Log the serialized form data
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message,
+                                }).then(function() {
+                                    window.location = response.redirect;
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi Kesalahan',
+                                    text: response.message
+                                });
+                            }
+                        }
+                    });
+                    return false; // Prevent default form submission
                 }
             });
-            return false;
-        }
-    });
-});
-
+        });
     </script>
 </body>
 </html>
