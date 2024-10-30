@@ -15,10 +15,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Nama</th>
                         <th>Judul Kegiatan</th>
-                        <th>Deskripsi Kegiatan</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Selesai</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -32,13 +30,17 @@
             $('#kegiatanTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{url("admin/kegiatan/list") }}",
+                ajax: {
+                    url: '{{ url("admin/kegiatanAg/list") }}',
+                    type: 'POST',
+                    data: function (d) {
+                        d._token = '{{ csrf_token() }}';
+                    }
+                },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'nama', name: 'nama'},
                     {data: 'judul_kegiatan', name: 'judul_kegiatan'},
-                    {data: 'deskripsi_kegiatan', name: 'deskripsi_kegiatan'},
-                    {data: 'tanggal_mulai', name: 'tanggal_mulai'},
-                    {data: 'tanggal_selesai', name: 'tanggal_selesai'},
                     {data: 'aksi', name: 'aksi', orderable: false, searchable: false}
                 ]
             });

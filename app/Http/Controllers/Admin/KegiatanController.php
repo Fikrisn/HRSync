@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kegiatan; // Assuming Kegiatan is your model
+use App\Models\kegiatanModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -24,7 +25,7 @@ class KegiatanController extends Controller
 
     public function list(Request $request){
         // Fetch data from the Kegiatan model (adjust according to the fields from your DB)
-        $kegiatan = Kegiatan::select('id_kegiatan', 'judul_kegiatan', 'deskripsi_kegiatan', 'tanggal_mulai', 'tanggal_selesai', 'id_jenis_kegiatan', 'id_pic');
+        $kegiatan = kegiatanModel::select('id_kegiatan', 'judul_kegiatan', 'deskripsi_kegiatan', 'tanggal_mulai', 'tanggal_selesai', 'id_jenis_kegiatan', 'id_dokumen','jenis_pengguna','nama', 'id_pengguna');
         
         // Filter based on id_kegiatan if provided
         if ($request->id_kegiatan) {
