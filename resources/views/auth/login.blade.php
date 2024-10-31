@@ -72,7 +72,7 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ url('/') }}" class="h1"><b>PWL</b>POS</a>
+                <a href="{{ url('/') }}" class="h1"><b>HRSync</b></a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>

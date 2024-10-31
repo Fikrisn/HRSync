@@ -13,7 +13,7 @@ class ProfilController extends Controller
     // Menampilkan halaman profil
     public function index()
     {
-        $user = UserModel::findOrFail(Auth::id());
+        $user = PenggunaModel::findOrFail(Auth::id());
         $breadcrumb = (object) [
             'title' => 'Data Profil',
             'list' => [
