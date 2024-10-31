@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserModel;
+use App\Models\PenggunaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -38,7 +38,7 @@ class ProfilController extends Controller
         ]);
 
         // Temukan user berdasarkan id
-        $user = UserModel::find($id);
+        $user = PenggunaModel::find($id);
 
         // Update username dan nama
         $user->username = $request->username;
@@ -84,7 +84,7 @@ class ProfilController extends Controller
             'profile_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $user = UserModel::find(Auth::id());
+        $user = PenggunaModel::find(Auth::id());
 
         // Hapus gambar lama jika ada
         if ($user->profile_image && Storage::exists('public/photos/' . $user->profile_image)) {

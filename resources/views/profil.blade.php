@@ -20,8 +20,8 @@
 
                         <div class="text-center mb-4">
                             <div class="position-relative mb-3">
-                                @if ($user->profile_image)
-                                    <img src="{{ asset('storage/photos/' . $user->profile_image) }}"
+                                @if ($pengguna->profile_image)
+                                    <img src="{{ asset('storage/photos/' . $pengguna->profile_image) }}"
                                         class="img-fluid rounded-circle shadow-lg"
                                         style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #f8f9fa;">
                                 @else
@@ -30,11 +30,11 @@
                                         style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #f8f9fa;">
                                 @endif
                             </div>
-                            <h5 class="mt-3 font-weight-bold">{{ $user->nama }}</h5>
-                            <p class="text-muted">{{ $user->username }}</p>
+                            <h5 class="mt-3 font-weight-bold">{{ $pengguna->nama }}</h5>
+                            <p class="text-muted">{{ $pengguna->username }}</p>
                         </div>
 
-                        <form method="POST" action="{{ route('profil.update', $user->user_id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('profil.update', $pengguna->id_pengguna) }}" enctype="multipart/form-data">
                             @method('PATCH')
                             @csrf
 
@@ -46,7 +46,7 @@
                             <div class="form-group mb-3">
                                 <label for="username" class="form-label">{{ __('Username') }}</label>
                                 <input id="username" type="text" class="form-control shadow-sm @error('username') is-invalid @enderror"
-                                    name="username" value="{{ $user->username }}" required autocomplete="username" placeholder="Masukkan username Anda">
+                                    name="username" value="{{ $pengguna->username }}" required autocomplete="username" placeholder="Masukkan username Anda">
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -57,7 +57,7 @@
                             <div class="form-group mb-3">
                                 <label for="nama" class="form-label">{{ __('Nama') }}</label>
                                 <input id="nama" type="text" class="form-control shadow-sm @error('nama') is-invalid @enderror"
-                                    name="nama" value="{{ old('nama', $user->nama) }}" required autocomplete="nama" placeholder="Masukkan nama lengkap Anda">
+                                    name="nama" value="{{ old('nama', $pengguna->nama) }}" required autocomplete="nama" placeholder="Masukkan nama lengkap Anda">
                                 @error('nama')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

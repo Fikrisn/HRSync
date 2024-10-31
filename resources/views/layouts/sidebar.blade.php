@@ -19,7 +19,7 @@
           <p>Dashboard</p>
         </a>
       </li>
-    @if(auth()->user()->jenis_pengguna && auth()->user()->jenis_pengguna->jenis_kode == "ADM")
+      @if(auth()->user()->jenispengguna->jenis_kode == "ADM")
         <li class="nav-item">
           <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
             <i class="nav-icon fa-solid fa-users-gear"></i>
@@ -45,7 +45,7 @@
         </a>
       </li>
       @endif
-    @if(auth()->user()->jenis_pengguna && auth()->user()->jenis_pengguna->jenis_kode == "PIM")
+      @if(auth()->user()->jenispengguna->pengguna_kode == "ADM")
         <li class="nav-item">
           <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
             <i class="nav-icon fas fa-layer-group"></i>
@@ -59,7 +59,7 @@
         </a>
       </li>
       @endif
-    @if(auth()->user()->jenis_pengguna && auth()->user()->jenis_pengguna->jenis_kode == "PIC")
+      @if(auth()->user()->jenispengguna->jenisfzz_kode == "ADM")
         <li class="nav-item">
           <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
             <i class="nav-icon fas fa-layer-group"></i>

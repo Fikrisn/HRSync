@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddProfileImageToMUserTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddProfileImageToMUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('m_user', function (Blueprint $table) {
+        Schema::table('pengguna', function (Blueprint $table) {
             $table->string('profile_image')->nullable()->after('password'); // Menambahkan kolom profile_image
         });
     }
@@ -24,8 +24,8 @@ class AddProfileImageToMUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('m_user', function (Blueprint $table) {
+        Schema::table('pengguna', function (Blueprint $table) {
             $table->dropColumn('profile_image'); // Menghapus kolom profile_image saat rollback
         });
     }
-}
+};

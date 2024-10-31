@@ -15,7 +15,7 @@ class PenggunaModel extends Authenticatable
     protected $table = 'pengguna';
     protected $primaryKey = 'id_pengguna';
 
-    protected $fillable = ['username', 'nama', 'email', 'password', 'NIP', 'id_jenis_pengguna','jenis kode'];
+    protected $fillable = ['username', 'nama', 'email', 'password', 'NIP', 'id_jenis_pengguna'];
 
     protected $hidden = ['password'];
     protected $cast = ['password' => 'hashed'];

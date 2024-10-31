@@ -28,27 +28,28 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [WelcomeController::class, 'index']);
 
-    Route::group(['prefix'=>'level','middleware'=>['authorize:Admin']], function () {
-        Route::get('/', [LevelController::class, 'index']);          // menampilkan halaman awal level
-        Route::post('/list', [LevelController::class, 'list']);      // menampilkan data level dalam json untuk datables
-        Route::get('/create', [LevelController::class, 'create']);   // menampilkan halaman form tambah level
-        Route::post('/', [LevelController::class, 'store']);          // menyimpan data level baru
-        Route::get('/create_ajax', [LevelController::class, 'create_ajax']); // Menampilkan halaman form tambah level Ajax
-        Route::post('/ajax', [LevelController::class, 'store_ajax']); // Menampilkan data level baru Ajax
-        Route::get('/{id}', [LevelController::class, 'show']);       // menampilkan detail level
-        Route::get('/{id}/show_ajax', [LevelController::class, 'show_ajax']);
-        Route::get('/{id}/edit', [LevelController::class, 'edit']);  // menampilkan halaman form edit level
-        Route::put('/{id}', [LevelController::class, 'update']);     // menyimpan perubahan data level
-        Route::get('/{id}/edit_ajax', [LevelController::class, 'edit_ajax']); // Menampilkan halaman form edit level Ajax
-        Route::put('/{id}/update_ajax', [LevelController::class, 'update_ajax']); // Menyimpan perubahan data level Ajax
-        Route::get('/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete level Ajax
-        Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // Untuk hapus data level Ajax
-        Route::delete('/{id}', [LevelController::class, 'destroy']); // menghapus data level
-        Route::get('/import', [LevelController::class, 'import']); // ajax form upload excel
-        Route::post('/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
-        Route::get('/export_excel', [LevelController::class, 'export_excel']); // export excel
-        Route::get('/export_pdf', [LevelController::class, 'export_pdf']); // export pdf
+    Route::group(['prefix'=>'jenis_pengguna','middleware'=>['authorize:Admin']], function () {
+        Route::get('/', [PenggunaController::class, 'index']);          // menampilkan halaman awal jenis pengguna
+        Route::post('/list', [PenggunaController::class, 'list']);      // menampilkan data jenis pengguna dalam json untuk datatables
+        Route::get('/create', [PenggunaController::class, 'create']);   // menampilkan halaman form tambah jenis pengguna
+        Route::post('/', [PenggunaController::class, 'store']);         // menyimpan data jenis pengguna baru
+        Route::get('/create_ajax', [PenggunaController::class, 'create_ajax']); // Menampilkan halaman form tambah jenis pengguna Ajax
+        Route::post('/ajax', [PenggunaController::class, 'store_ajax']); // Menyimpan data jenis pengguna baru Ajax
+        Route::get('/{id}', [PenggunaController::class, 'show']);       // menampilkan detail jenis pengguna
+        Route::get('/{id}/show_ajax', [PenggunaController::class, 'show_ajax']);
+        Route::get('/{id}/edit', [PenggunaController::class, 'edit']);  // menampilkan halaman form edit jenis pengguna
+        Route::put('/{id}', [PenggunaController::class, 'update']);     // menyimpan perubahan data jenis pengguna
+        Route::get('/{id}/edit_ajax', [PenggunaController::class, 'edit_ajax']); // Menampilkan halaman form edit jenis pengguna Ajax
+        Route::put('/{id}/update_ajax', [PenggunaController::class, 'update_ajax']); // Menyimpan perubahan data jenis pengguna Ajax
+        Route::get('/{id}/delete_ajax', [PenggunaController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete jenis pengguna Ajax
+        Route::delete('/{id}/delete_ajax', [PenggunaController::class, 'delete_ajax']); // Untuk hapus data jenis pengguna Ajax
+        Route::delete('/{id}', [PenggunaController::class, 'destroy']); // menghapus data jenis pengguna
+        Route::get('/import', [PenggunaController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [PenggunaController::class, 'import_ajax']); // ajax import excel
+        Route::get('/export_excel', [PenggunaController::class, 'export_excel']); // export excel
+        Route::get('/export_pdf', [PenggunaController::class, 'export_pdf']); // export pdf
     });
+    
 
     Route::group(['prefix' => 'pengguna', 'middleware' => ['authorize:Admin']], function () {
         Route::get('/', [PenggunaController::class, 'index']);           // menampilkan halaman awal pengguna

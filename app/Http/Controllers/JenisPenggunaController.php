@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisPengguna; // Ganti model
+use App\Models\JenisPenggunaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class JenisPenggunaController extends Controller
+class JenisPenggunaModelController extends Controller
 {
     public function index()
     {
@@ -23,7 +23,7 @@ class JenisPenggunaController extends Controller
         ];
 
         $activeMenu = 'jenis_pengguna';
-        $jenis_pengguna = JenisPengguna::all();
+        $jenis_pengguna = JenisPenggunaModel::all();
         return view('jenis_pengguna.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
@@ -34,7 +34,7 @@ class JenisPenggunaController extends Controller
 
     public function list(Request $request)
     {
-        $jenis_pengguna = JenisPengguna::select('id_jenis_pengguna', 'jenis_kode', 'nama_jenis_pengguna');
+        $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'jenis_kode', 'nama_jenis_pengguna');
 
         if ($request->id_jenis_pengguna) {
             $jenis_pengguna->where('id_jenis_pengguna', $request->id_jenis_pengguna);
@@ -62,7 +62,7 @@ class JenisPenggunaController extends Controller
             'nama_jenis_pengguna' => 'required|string|max:100'
         ]);
         
-        JenisPengguna::create([
+        JenisPenggunaModel::create([
             'jenis_kode' => $request->jenis_kode,
             'nama_jenis_pengguna' => $request->nama_jenis_pengguna,
             'bobot' => $request->bobot ?? null
