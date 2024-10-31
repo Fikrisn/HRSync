@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class JenisPenggunaModel extends Model
 {
@@ -12,13 +14,16 @@ class JenisPenggunaModel extends Model
     protected $primaryKey = 'id_jenis_pengguna';
 
     protected $fillable = [
+        'id_jenis_pengguna',
         'nama_jenis_pengguna', 
         'bobot',
+        'jenis_kode',
+        'created_at',
+        'updated_at'
     ];
 
     // Define the relationship with Pengguna
-    public function pengguna()
-    {
-        return $this->hasMany(PenggunaModel::class, 'id_jenis_pengguna');
+    public function pengguna():BelongsTo {
+        return $this->belongsTo(PenggunaModel::class);
     }
 }

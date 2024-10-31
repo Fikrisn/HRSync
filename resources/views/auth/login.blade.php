@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Pengguna</title>
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- icheck bootstrap -->
@@ -18,54 +16,50 @@
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
     <style>
         body {
-            background-image: url("{{ asset('public/img/pp.jpg') }}");
-            background-size: cover;
-            background-position: center;
+            background-color: #f0f8ff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-    
+
         .login-box {
             width: 400px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.85); /* Set background semi-transparan */
         }
-    
-        /* Card styling */
+
         .card {
             border-radius: 0;
             overflow: hidden;
         }
-    
+
         .card-header {
             background: linear-gradient(to right, #007bff, #6f42c1);
             color: white;
         }
-    
+
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
         }
-    
+
         .btn-primary:hover {
             background-color: #0056b3;
             border-color: #004085;
         }
-    
+
         .error-text {
             font-size: 0.9rem;
             margin-top: 5px;
         }
-    
+
         .login-box-msg {
             margin-bottom: 15px;
         }
-    
+
         /* Animasi input focus */
         .input-group input:focus {
             border-color: #007bff;
@@ -78,14 +72,14 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ url('/') }}" class="h1"><b>HRSync</b></a>
+                <a href="{{ url('/') }}" class="h1"><b>PWL</b>POS</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
-                <form action="{{ url('login') }}" method="POST" id="form-login">
+                <form action="{{ route('postlogin') }}" method="POST" id="form-login">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" id="Username" name="Username" class="form-control" placeholder="Username" required>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -105,7 +99,8 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember"><label for="remember">Ingat Saya</label>
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Ingat Saya</label>
                             </div>
                         </div>
                         <div class="col-4">
@@ -141,7 +136,7 @@
             }
         });
 
-                $(document).ready(function() {
+        $(document).ready(function() {
             $("#form-login").validate({
                 rules: {
                     username: {
@@ -194,14 +189,19 @@
                                     text: response.message
                                 });
                             }
+                        },
+                        error: function(response) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Login Gagal',
+                                text: 'Terjadi kesalahan pada server.',
+                            });
                         }
                     });
                     return false;
                 }
             });
         });
-
     </script>
 </body>
-
 </html>

@@ -12,21 +12,23 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 Route::pattern('id', '[0-9]+'); //artinya ketika ada parameter {id}, maka harus berupa angka
 
+
 Route::get('login', [AuthController::class, 'login'])->name('login');
-Route::post('login', [AuthController::class, 'postlogin']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth');
-// New routes for registration
-Route::get('register', [AuthController::class, 'postregister'])->name('register'); 
-Route::post('register', [AuthController::class, 'register']); 
+Route::post('login', [AuthController::class, 'postlogin'])->name('postlogin');
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth');// New routes for registration
+
+Route::get('/register', [AuthController::class, 'postregister']);
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [WelcomeController::class, 'index']);
 
-    Route::group(['prefix'=>'level','middleware'=>['authorize:ADM']], function () {
+    Route::group(['prefix'=>'level','middleware'=>['authorize:Admin']], function () {
         Route::get('/', [LevelController::class, 'index']);          // menampilkan halaman awal level
         Route::post('/list', [LevelController::class, 'list']);      // menampilkan data level dalam json untuk datables
         Route::get('/create', [LevelController::class, 'create']);   // menampilkan halaman form tambah level
@@ -48,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/export_pdf', [LevelController::class, 'export_pdf']); // export pdf
     });
 
-    Route::group(['prefix' => 'pengguna', 'middleware' => ['authorize:ADM']], function () {
+    Route::group(['prefix' => 'pengguna', 'middleware' => ['authorize:Admin']], function () {
         Route::get('/', [PenggunaController::class, 'index']);           // menampilkan halaman awal pengguna
         Route::post('/list', [PenggunaController::class, 'list']);       // menampilkan data pengguna dalam json untuk datatables
         Route::get('/create', [PenggunaController::class, 'create']);    // menampilkan halaman form tambah pengguna
@@ -71,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
     });
     
 
-    Route::group(['prefix' => 'kegiatan', 'middleware' => ['authorize:ADM,MNG,STF']], function () {
+    Route::group(['prefix' => 'kegiatan', 'middleware' => ['authorize:Admin,MNG,STF']], function () {
         Route::get('/', [KegiatanController::class, 'index']);               // Display main page for kegiatan
         Route::post('/list', [KegiatanController::class, 'list']);           // Display kegiatan data as JSON for DataTables
         Route::get('/create', [KegiatanController::class, 'create']);        // Display form for adding kegiatan
@@ -94,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
     });
     
 
-    Route::group(['prefix' => 'supplier','middleware'=>['authorize:ADM,MNG,STF']], function () {
+    Route::group(['prefix' => 'supplier','middleware'=>['authorize:Admin,MNG,STF']], function () {
         Route::get('/', [SupplierController::class, 'index']);          // menampilkan halaman awal supplier
         Route::post('/list', [SupplierController::class, 'list']);      // menampilkan data supplier dalam json untuk datables
         Route::get('/create', [SupplierController::class, 'create']);   // menampilkan halaman form tambah supplier
@@ -116,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/export_pdf', [SupplierController::class, 'export_pdf']); // export pdf
     });
 
-    Route::group(['prefix' => 'barang','middleware'=>['authorize:ADM,MNG,STF']], function () {
+    Route::group(['prefix' => 'barang','middleware'=>['authorize:Admin,MNG,STF']], function () {
         Route::get('/', [BarangController::class, 'index']);          // menampilkan halaman awal barang
         Route::post('/list', [BarangController::class, 'list']);      // menampilkan data barang dalam json untuk datables
         Route::get('/create', [BarangController::class, 'create']);   // menampilkan halaman form tambah barang
@@ -151,7 +153,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //route stok
-    Route::group(['prefix' =>'stok', 'middleware'=>'authorize:ADM,MNG'],function(){
+    Route::group(['prefix' =>'stok', 'middleware'=>'authorize:Admin,MNG'],function(){
         Route::get('/', [StokController::class, 'index']);          // menampilkan halaman awal stok
         Route::post('/list', [StokController::class, 'list']);      // menampilkan data stok dalam json untuk datatables
         Route::get('/create', [StokController::class, 'create']);   // menampilkan halaman form tambah stok

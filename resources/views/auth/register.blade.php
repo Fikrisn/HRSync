@@ -14,6 +14,51 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <style>
+        .login-box {
+            width: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.85); /* Set background semi-transparan */
+        }
+    
+        /* Card styling */
+        .card {
+            border-radius: 0;
+            overflow: hidden;
+        }
+    
+        .card-header {
+            background: linear-gradient(to right, #007bff, #6f42c1);
+            color: white;
+        }
+    
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+    
+        .error-text {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    
+        .login-box-msg {
+            margin-bottom: 15px;
+        }
+    
+        /* Animasi input focus */
+        .input-group input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
@@ -62,6 +107,17 @@
                         @enderror
                     </div>
                     <div class="input-group mb-3">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                        @error('email')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="input-group mb-3">
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -72,22 +128,25 @@
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                                <label for="agreeTerms">
-                                    Saya setuju dengan <a href="#">syarat dan ketentuan</a>
-                                </label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="NIP" name="NIP" class="form-control" placeholder="NIP (opsional)" value="{{ old('NIP') }}">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-id-badge"></span>
                             </div>
                         </div>
+                        @error('NIP')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="row">
                         <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Registrasi</button>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-12 text-center">
-                            <p>Sudah punya akun? <a href="{{ url('/login') }}">Login</a></p>
+                            <p>Sudah punya akun? <a href="{{ url('login') }}">Login</a></p>
                         </div>
                     </div>
                 </form>
@@ -102,89 +161,43 @@
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $("#form-register").validate({
-                rules: {
-                    id_jenis_pengguna: {
-                        required: true,
+            $("#form-register").on("submit", function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: $(this).serialize(),
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    username: {
-                        required: true,
-                        minlength: 4,
-                        maxlength: 20
-                    },
-                    nama: {
-                        required: true,
-                        maxlength: 255
-                    },
-                    password: {
-                        required: true,
-                        minlength: 6,
-                    },
-                    terms: {
-                        required: true
-                    }
-                },
-                messages: {
-                    id_jenis_pengguna: {
-                        required: "Jenis pengguna wajib dipilih"
-                    },
-                    username: {
-                        required: "Username wajib diisi",
-                        minlength: "Username minimal 4 karakter",
-                        maxlength: "Username maksimal 20 karakter"
-                    },
-                    nama: {
-                        required: "Nama wajib diisi",
-                        maxlength: "Nama maksimal 255 karakter"
-                    },
-                    password: {
-                        required: "Password wajib diisi",
-                        minlength: "Password minimal 6 karakter"
-                    },
-                    terms: {
-                        required: "Anda harus menyetujui syarat dan ketentuan"
-                    }
-                },
-                errorPlacement: function(error, element) {
-                    error.addClass('text-danger');
-                    error.insertAfter(element.closest('.input-group'));
-                    setTimeout(function() {
-                        error.addClass('active'); // Aktifkan transisi
-                    }, 100); // Delay untuk transisi
-                },
-                highlight: function(element) {
-                    $(element).addClass('error'); // Tambah kelas error
-                },
-                unhighlight: function(element) {
-                    $(element).removeClass('error'); // Hapus kelas error
-                    $(element).next('.error-text').removeClass('active').fadeOut(); // Hilangkan pesan error
-                },
-                submitHandler: function(form) {
-                    console.log($(form).serialize()); // Log the serialized form data
-                    $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $(form).serialize(),
-                        success: function(response) {
-                            if (response.status) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message,
-                                }).then(function() {
-                                    window.location = response.redirect;
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Terjadi Kesalahan',
-                                    text: response.message
-                                });
-                            }
+                    success: function(response) {
+                        if (response.status) {
+                            // Show success message with SweetAlert
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Registrasi Berhasil',
+                                text: 'Akun Anda telah berhasil dibuat.',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Redirect to login page after clicking OK
+                                    window.location.href = "{{ url('login') }}";
+                                }
+                            });
+                        } else {
+                            // Handle registration failure
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Registrasi Gagal',
+                                text: response.message,
+                            });
                         }
-                    });
-                    return false; // Prevent default form submission
-                }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                    }
+                });
             });
         });
     </script>
