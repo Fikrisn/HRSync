@@ -19,7 +19,7 @@
           <p>Dashboard</p>
         </a>
       </li>
-      @if(auth()->user()->level->level_kode == "ADM")
+      @if(auth()->user()->level->jenis_kode == "ADM")
         <li class="nav-item">
           <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
             <i class="nav-icon fa-solid fa-users-gear"></i>
