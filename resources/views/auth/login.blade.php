@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+    <script src="https://kit.fontawesome.com/f2110b96b9.js" crossorigin="anonymous"></script>
+    {{-- fontawesome --}}
+    <link rel="stylesheet" href="">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- SweetAlert2 -->
@@ -16,12 +19,13 @@
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
     <style>
         body {
-            background-color: #f0f8ff;
-            display: flex;
+            background-image: url('img/jtiblur.png');
+            background-color: #f0f8ff ;
+            display: inline-block;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            margin: 10;
         }
 
         .login-box {
