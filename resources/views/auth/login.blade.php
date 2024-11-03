@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <link rel="icon" href="{{ asset('polinema.png') }}" type="image/png">
     <style>
         body {
             position: relative; /* Position relative for the pseudo-element */

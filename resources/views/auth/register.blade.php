@@ -14,7 +14,38 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <link rel="icon" href="{{ asset('polinema.png') }}" type="image/png">
     <style>
+        body {
+            position: relative; /* Position relative for the pseudo-element */
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Removes default margin */
+            overflow: hidden; /* Prevents any overflow */
+        }
+
+        body::before {
+            content: ''; /* Required to create a pseudo-element */
+            position: absolute; /* Position it absolutely within the body */
+            top: 0; /* Align to the top */
+            left: 0; /* Align to the left */
+            right: 0; /* Align to the right */
+            bottom: 0; /* Align to the bottom */
+            background-image: url('img/jtiblur.png'); /* Background image */
+            background-size: cover; /* Ensures the image covers the entire area */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            filter: blur(1px); /* Adjust blur amount here (increase or decrease as needed) */
+            z-index: -1; /* Send to the back */
+        }
+
+        .content {
+            display: flex; /* Use flexbox for positioning */
+            justify-content: flex-end; /* Align items to the right */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full height */
+            color: white; /* Change text color for better visibility */
+            position: relative; /* Ensures content appears above the blurred background */
+        }
         .login-box {
             width: 400px;
             border-radius: 15px;
