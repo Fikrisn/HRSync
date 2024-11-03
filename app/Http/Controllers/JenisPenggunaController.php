@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class JenisPenggunaModelController extends Controller
+class JenisPenggunaController extends Controller
 {
     public function index()
     {
@@ -34,42 +34,58 @@ class JenisPenggunaModelController extends Controller
 
     public function list(Request $request)
     {
-        $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'jenis_kode', 'nama_jenis_pengguna');
+        $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'nama_jenis_pengguna', 'bobot', 'jenis_kode', 'created_at', 'updated_at');
 
         if ($request->id_jenis_pengguna) {
             $jenis_pengguna->where('id_jenis_pengguna', $request->id_jenis_pengguna);
         }
-        
+
         return DataTables::of($jenis_pengguna)
             ->addIndexColumn()
             ->addColumn('aksi', function ($jenis_pengguna) {
-                $btn = '<button onclick="modalAction(\'' . url('/jenis_pengguna/' . $jenis_pengguna->id_jenis_pengguna .
-                    '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/jenis_pengguna/' . $jenis_pengguna->id_jenis_pengguna .
-                    '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/jenis_pengguna/' . $jenis_pengguna->id_jenis_pengguna .
-                    '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn = '<button onclick="modalAction(\'' . url('/jenis_pengguna/' . $jenis_pengguna->id_jenis_pengguna . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/jenis_pengguna/' . $jenis_pengguna->id_jenis_pengguna . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/jenis_pengguna/' . $jenis_pengguna->id_jenis_pengguna . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi'])
             ->make(true);
     }
 
-    public function store(Request $request)
+    public function show_ajax($id)
     {
-        $request->validate([
-            'jenis_kode' => 'required|string|min:3|unique:jenis_pengguna,jenis_kode',
-            'nama_jenis_pengguna' => 'required|string|max:100'
-        ]);
-        
-        JenisPenggunaModel::create([
-            'jenis_kode' => $request->jenis_kode,
-            'nama_jenis_pengguna' => $request->nama_jenis_pengguna,
-            'bobot' => $request->bobot ?? null
-        ]);
-        
-        return redirect('/jenis_pengguna')->with('success', 'Data jenis pengguna berhasil disimpan');
+        $jenis_pengguna = JenisPenggunaModel::find($id);
+        return view('jenispengguna.show_ajax', ['jenis_pengguna' => $jenis_pengguna]);
     }
 
-    // Contoh untuk export ke Excel dan PDF juga perlu disesuaikan kolomnya
+    public function create_ajax()
+    {
+        return view('jenispengguna.create_ajax');
+    }
+
+    public function edit_ajax($id)
+    {
+        $jenis_pengguna = JenisPenggunaModel::find($id);
+        return view('jenispengguna.edit_ajax', ['jenis_pengguna' => $jenis_pengguna]);
+    }
+
+    public function delete_ajax(Request $request, $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $jenis_pengguna = JenisPenggunaModel::find($id);
+            if ($jenis_pengguna) {
+                $jenis_pengguna->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+        return redirect('/');
+    }
 }

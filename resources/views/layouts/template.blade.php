@@ -4,11 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name', 'PWL Laravel Starter Code') }}</title>
+  <link rel="icon" href="{{ asset('polinema.png') }}" type="image/png">
+  <title>{{ $title ?? 'HRSync' }}</title>
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
@@ -23,6 +25,13 @@
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
 
   @stack('css')
+  <style>
+    .brand-text {
+      font-family:Georgia, 'Times New Roman', Times, serif; /* Use the Google Font */
+      color: rgb(253, 253, 253);
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body class="hold-transition layout-fixed layout-navbar-fixed">
@@ -36,9 +45,9 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="{{ url('/') }}" class="brand-link">
-        <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-          class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">PWL - Starter Code</span>
+        <img src="{{ asset('adminlte/dist/img/Logo.png') }}" alt="AdminLTE Logo"
+          class="brand-image img-cube" height="100px" style="opacity: 100">
+        <span class="brand-text font-weight-light">HRSync</span>
       </a>
 
       <!-- Sidebar -->

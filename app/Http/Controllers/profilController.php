@@ -2,110 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PenggunaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use App\Models\PenggunaModel;
 
 class ProfilController extends Controller
 {
-    // Menampilkan halaman profil
-    public function index()
+    public function edit()
     {
-        $user = PenggunaModel::findOrFail(Auth::id());
-        $breadcrumb = (object) [
-            'title' => 'Data Profil',
-            'list' => [
-                ['name' => 'Home', 'url' => url('/')],
-                ['name' => 'Profil', 'url' => url('/profil')]
-            ]
-        ];
-        $activeMenu = 'profil';
-        return view('profil', compact('user', 'breadcrumb', 'activeMenu'));
+        $pengguna = Auth::user(); // Ambil pengguna yang terautentikasi
+
+        return view('profil', ['pengguna' => $pengguna]);
     }
 
-    // Metode untuk update profil pengguna
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        // Validasi input
         $request->validate([
-            'username' => 'required|string|min:3|unique:m_user,username,' . $id . ',user_id',
             'nama' => 'required|string|max:100',
-            'old_password' => 'nullable|string',
-            'password' => 'nullable|min:5',
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg', // Validasi untuk gambar
+            'email' => 'required|email|unique:pengguna,email,' . Auth::id(),
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Temukan user berdasarkan id
-        $user = PenggunaModel::find($id);
+        $pengguna = PenggunaModel::find(Auth::id()); // Ambil pengguna dari model
 
-        // Update username dan nama
-        $user->username = $request->username;
-        $user->nama = $request->nama;
+        if ($pengguna) { // Pastikan pengguna ditemukan
+            $pengguna->nama = $request->nama;
+            $pengguna->email = $request->email;
 
-        // Jika user mengisi password lama, periksa validitasnya
-        if ($request->filled('old_password')) {
-            if (Hash::check($request->old_password, $user->password)) {
-                // Jika password lama valid, update password baru
-                $user->password = Hash::make($request->password);
-            } else {
-                return back()
-                    ->withErrors(['old_password' => __('Password lama tidak sesuai')])
-                    ->withInput();
-            }
-        }
-
-        // Jika ada file gambar yang di-upload
-        if ($request->hasFile('profile_image')) {
-            // Hapus gambar lama jika ada
-            if ($user->profile_image && Storage::exists('public/photos/' . $user->profile_image)) {
-                Storage::delete('public/photos/' . $user->profile_image);
+            if ($request->hasFile('profile_image')) {
+                $file = $request->file('profile_image');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/photos', $filename);
+                $pengguna->profile_image = $filename;
             }
 
-            // Simpan gambar baru dan update ke database
-            $fileName = time() . '.' . $request->profile_image->extension();
-            $request->profile_image->storeAs('public/photos', $fileName);
-            $user->profile_image = $fileName;
+            $pengguna->save(); // Simpan perubahan
+
+            return redirect()->back()->with('status', 'Profil berhasil diperbarui');
         }
 
-        // Simpan perubahan ke database
-        $user->save();
-
-        // Kembalikan ke halaman profil dengan pesan sukses
-        return back()->with('status', 'Profil berhasil diperbarui');
-    }
-
-    // Fungsi upload gambar profile yang diakses via ajax
-    public function uploadProfileImage(Request $request)
-    {
-        // Validasi upload file gambar
-        $request->validate([
-            'profile_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        $user = PenggunaModel::find(Auth::id());
-
-        // Hapus gambar lama jika ada
-        if ($user->profile_image && Storage::exists('public/photos/' . $user->profile_image)) {
-            Storage::delete('public/photos/' . $user->profile_image);
-        }
-
-        // Simpan gambar baru
-        $fileName = time() . '.' . $request->profile_image->extension();
-        $request->profile_image->storeAs('public/photos', $fileName);
-
-        // Update field profile_image pada user
-        $user->profile_image = $fileName;
-        $user->save();
-
-        // Kembalikan respon JSON
-        return response()->json(['success' => true, 'file_name' => $fileName]);
-    }
-
-    // Middleware untuk memastikan pengguna sudah login
-    public function __construct()
-    {
-        $this->middleware('auth');
+        return redirect()->back()->with('error', 'Pengguna tidak ditemukan');
     }
 }

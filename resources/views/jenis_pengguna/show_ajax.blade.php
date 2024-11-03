@@ -1,4 +1,4 @@
-@empty($level)
+@empty($jenispengguna)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/level') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/jenispengguna') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detail Level</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Detail Jenis Pengguna</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -29,15 +29,15 @@
                 <table class="table table-sm table-bordered table-striped">
                     <tr>
                         <th>ID</th>
-                        <td>{{ $level->level_id }}</td>
+                        <td>{{ $jenisPengguna->id_jenis_pengguna }}</td>
                     </tr>
                     <tr>
-                        <th>Kode</th>
-                        <td>{{ $level->level_kode }}</td>
+                        <th>Nama Jenis Pengguna</th>
+                        <td>{{ $jenisPengguna->nama_jenis_pengguna }}</td>
                     </tr>
                     <tr>
-                        <th>Nama</th>
-                        <td>{{ $level->level_nama }}</td>
+                        <th>Bobot</th>
+                        <td>{{ $jenisPengguna->bobot }}</td>
                     </tr>
                 </table>
             </div>

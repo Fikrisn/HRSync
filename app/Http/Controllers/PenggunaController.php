@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JenisPenggunaModel;
-use App\Models\PenggunaModel; // Updated model name to PenggunaModel
+use App\Models\PenggunaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class PenggunaController extends Controller // Renamed to PenggunaController
+class PenggunaController extends Controller
 {
     // Display the main page for pengguna
     public function index()
@@ -27,24 +27,24 @@ class PenggunaController extends Controller // Renamed to PenggunaController
         ];
 
         $activeMenu = 'pengguna'; // Active menu set to pengguna
-        $level = JenisPenggunaModel::all(); // Get level data for filtering
-        return view('pengguna.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'level' => $level]);
+        $jenis_pengguna = JenisPenggunaModel::all(); // Get jenis_pengguna data for filtering
+        return view('pengguna.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'jenis_pengguna' => $jenis_pengguna]);
     }
 
     public function list(Request $request)
     {
-        $pengguna = PenggunaModel::select('pengguna_id', 'username', 'nama', 'level_id')
-            ->with('level');
+        $pengguna = PenggunaModel::select('id_pengguna', 'username', 'nama', 'email', 'NIP', 'id_jenis_pengguna')
+            ->with('jenisPengguna');
 
-        if ($request->level_id) {
-            $pengguna->where('level_id', $request->level_id);
+        if ($request->id_jenis_pengguna) {
+            $pengguna->where('id_jenis_pengguna', $request->id_jenis_pengguna);
         }
         return DataTables::of($pengguna)
             ->addIndexColumn()
             ->addColumn('aksi', function ($pengguna) {
-                $btn = '<button onclick="modalAction(\'' . url('/pengguna/' . $pengguna->pengguna_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/pengguna/' . $pengguna->pengguna_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/pengguna/' . $pengguna->pengguna_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn = '<button onclick="modalAction(\'' . url('/pengguna/' . $pengguna->id_pengguna . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/pengguna/' . $pengguna->id_pengguna . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/pengguna/' . $pengguna->id_pengguna . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -62,26 +62,30 @@ class PenggunaController extends Controller // Renamed to PenggunaController
             'title' => 'Tambah Pengguna Baru'
         ];
 
-        $level = JenisPenggunaModel::all();
+        $jenis_pengguna = JenisPenggunaModel::all();
         $activeMenu = 'pengguna';
 
-        return view('pengguna.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('pengguna.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'jenis_pengguna' => $jenis_pengguna, 'activeMenu' => $activeMenu]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|min:3|unique:m_pengguna,username',
+            'username' => 'required|string|min:3|unique:pengguna,username',
             'nama' => 'required|string|max:100',
+            'email' => 'required|email|unique:pengguna,email',
+            'NIP' => 'required|string|unique:pengguna,NIP',
             'password' => 'required|min:5',
-            'level_id' => 'required|integer',
+            'id_jenis_pengguna' => 'required|integer',
         ]);
 
         PenggunaModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
+            'email' => $request->email,
+            'NIP' => $request->NIP,
             'password' => bcrypt($request->password),
-            'level_id' => $request->level_id
+            'id_jenis_pengguna' => $request->id_jenis_pengguna
         ]);
 
         return redirect('/pengguna')->with('success', 'Data pengguna berhasil disimpan');
@@ -89,7 +93,7 @@ class PenggunaController extends Controller // Renamed to PenggunaController
 
     public function show(string $id)
     {
-        $pengguna = PenggunaModel::with('level')->find($id);
+        $pengguna = PenggunaModel::with('jenisPengguna')->find($id);
 
         $breadcrumb = (object)[
             'title' => 'Detail Pengguna',
@@ -106,7 +110,7 @@ class PenggunaController extends Controller // Renamed to PenggunaController
 
     public function show_ajax(string $id)
     {
-        $pengguna = PenggunaModel::with('level')->find($id);
+        $pengguna = PenggunaModel::with('jenisPengguna')->find($id);
         $page = (object)[
             'title' => 'Detail Pengguna'
         ];
@@ -116,17 +120,19 @@ class PenggunaController extends Controller // Renamed to PenggunaController
     public function edit_ajax(string $id)
     {
         $pengguna = PenggunaModel::find($id);
-        $level = JenisPenggunaModel::select('level_id', 'level_nama')->get();
-        return view('pengguna.edit_ajax', ['pengguna' => $pengguna, 'level' => $level]);
+        $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'nama_jenis_pengguna')->get();
+        return view('pengguna.edit_ajax', ['pengguna' => $pengguna, 'jenis_pengguna' => $jenis_pengguna]);
     }
 
     public function update_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'level_id' => 'required|integer',
-                'username' => 'required|max:20|unique:m_pengguna,username,' . $id . ',pengguna_id',
+                'id_jenis_pengguna' => 'required|integer',
+                'username' => 'required|max:20|unique:pengguna,username,' . $id . ',id_pengguna',
                 'nama' => 'required|max:100',
+                'email' => 'required|email|unique:pengguna,email,' . $id . ',id_pengguna',
+                'NIP' => 'required|string|unique:pengguna,NIP,' . $id . ',id_pengguna',
                 'password' => 'nullable|min:6|max:20'
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -160,10 +166,12 @@ class PenggunaController extends Controller // Renamed to PenggunaController
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'username' => 'required|string|min:3|unique:m_pengguna,username,' . $id . ',pengguna_id',
+            'username' => 'required|string|min:3|unique:pengguna,username,' . $id . ',id_pengguna',
             'nama' => 'required|string|max:100',
+            'email' => 'required|email|unique:pengguna,email,' . $id . ',id_pengguna',
+            'NIP' => 'required|string|unique:pengguna,NIP,' . $id . ',id_pengguna',
             'password' => 'nullable|min:5',
-            'level_id' => 'required|integer'
+            'id_jenis_pengguna' => 'required|integer'
         ]);
 
         $pengguna = PenggunaModel::find($id);
@@ -171,8 +179,10 @@ class PenggunaController extends Controller // Renamed to PenggunaController
         $pengguna->update([
             'username' => $request->username,
             'nama' => $request->nama,
+            'email' => $request->email,
+            'NIP' => $request->NIP,
             'password' => $request->password ? bcrypt($request->password) : $pengguna->password,
-            'level_id' => $request->level_id
+            'id_jenis_pengguna' => $request->id_jenis_pengguna
         ]);
         return redirect('/pengguna')->with('success', 'Data pengguna berhasil diubah');
     }
@@ -220,17 +230,19 @@ class PenggunaController extends Controller // Renamed to PenggunaController
 
     public function create_ajax()
     {
-        $level = JenisPenggunaModel::select('level_id', 'level_nama')->get();
-        return view('pengguna.create_ajax')->with('level', $level);
+        $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'nama_jenis_pengguna')->get();
+        return view('pengguna.create_ajax')->with('jenis_pengguna', $jenis_pengguna);
     }
 
     public function store_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'level_id' => 'required|integer',
-                'username' => 'required|string|min:3|unique:m_pengguna,username',
+                'id_jenis_pengguna' => 'required|integer',
+                'username' => 'required|string|min:3|unique:pengguna,username',
                 'nama' => 'required|string|max:100',
+                'email' => 'required|email|unique:pengguna,email',
+                'NIP' => 'required|string|unique:pengguna,NIP',
                 'password' => 'required|min:6'
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -242,9 +254,11 @@ class PenggunaController extends Controller // Renamed to PenggunaController
                 ]);
             }
             PenggunaModel::create([
-                'level_id' => $request->level_id,
+                'id_jenis_pengguna' => $request->id_jenis_pengguna,
                 'username' => $request->username,
                 'nama' => $request->nama,
+                'email' => $request->email,
+                'NIP' => $request->NIP,
                 'password' => Hash::make($request->password),
             ]);
             return response()->json([

@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PenggunaModel extends Authenticatable
 {
@@ -18,7 +16,7 @@ class PenggunaModel extends Authenticatable
     protected $fillable = ['username', 'nama', 'email', 'password', 'NIP', 'id_jenis_pengguna'];
 
     protected $hidden = ['password'];
-    protected $cast = ['password' => 'hashed'];
+    protected $casts = ['password' => 'hashed'];
 
     // Define the relationship with Jenis Pengguna
     public function jenisPengguna(): BelongsTo

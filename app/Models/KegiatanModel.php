@@ -10,13 +10,13 @@ class KegiatanModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'm_kegiatan';
-    protected $primaryKey = 'kegiatan_id';
+    protected $table = 'kegiatan';
+    protected $primaryKey = 'id_kegiatan';
 
-    protected $fillable = ['kegiatan_id', 'kegiatan_kode', 'kegiatan_nama'];
+    protected $fillable = ['id_kegiatan','judul_kegiatan','deskripsi_kegiatan',	'tanggal_mulai','tanggal_selesai','	id_jenis_kegiatan',	'id_dokumen','jenis_pengguna','nama','id_pengguna'];
 
-    public function barang(): HasMany
+    public function jenisPengguna(): HasMany
     {
-        return $this->hasMany(BarangModel::class, 'kegiatan_id', 'kegiatan_id');
+        return $this->hasMany(JenisPenggunaModel::class, 'id_kegiatan', 'id_kegiatan');
     }
 }

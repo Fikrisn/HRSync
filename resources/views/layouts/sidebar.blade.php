@@ -14,32 +14,32 @@
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-        <a href="{{ url('/')}}" class="nav-link {{($activeMenu == 'dashboard')? 'active' : ''}}">
+        <a href="{{ url('/dashboard')}}" class="nav-link {{($activeMenu == 'dashboard')? 'active' : ''}}">
           <i class="nav-icon fas fa-tachometer-alt"></i>
           <p>Dashboard</p>
         </a>
       </li>
       @if(auth()->user()->jenispengguna->jenis_kode == "ADM")
         <li class="nav-item">
-          <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
+          <a href="{{ url('/jenis_pengguna')}}" class="nav-link {{($activeMenu == 'jenis_pengguna')? 'active' : ''}}">
             <i class="nav-icon fa-solid fa-users-gear"></i>
             <p>Jenis Pengguna</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ url('/user')}}" class="nav-link {{($activeMenu == 'user')? 'active' : ''}}">
+          <a href="{{ url('/pengguna')}}" class="nav-link {{($activeMenu == 'pengguna')? 'active' : ''}}">
             <i class="nav-icon far fa-address-book"></i>
             <p>Data Dosen</p>
           </a>
         </li>
       <li class="nav-item">
-        <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'penjualan')? 'active' : ''}}">
+        <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'kegiatan')? 'active' : ''}}">
           <i class="nav-icon fas fa-bookmark"></i>
           <p>Kegiatan</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
+        <a href="{{ url('/statistik')}}" class="nav-link {{($activeMenu == 'statistik')? 'active' : ''}}">
           <i class="nav-icon fas fa-cubes"></i>
           <p>Statistik </p>
         </a>

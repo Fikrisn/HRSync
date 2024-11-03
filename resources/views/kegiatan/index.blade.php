@@ -25,6 +25,11 @@
                         <th>Deskripsi</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
+                        <th>Jenis Kegiatan</th>
+                        <th>Dokumen</th>
+                        <th>Jenis Pengguna</th>
+                        <th>Nama</th>
+                        <th>ID Pengguna</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -53,7 +58,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function (d){
-                        d.kegiatan_id = $('#kegiatan_id').val();
+                        d.id_kegiatan = $('#id_kegiatan').val();
                     }
                 },
                 columns: [
@@ -88,6 +93,36 @@
                         searchable: true
                     },
                     {
+                        data: "id_jenis_kegiatan",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "id_dokumen",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "jenis_pengguna",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "nama",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "id_pengguna",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
                         data: "aksi",
                         className: "",
                         orderable: false,
@@ -95,7 +130,7 @@
                     }
                 ]
             });
-            $('#kegiatan_id').on('change',function(){
+            $('#id_kegiatan').on('change',function(){
                 dataKegiatan.ajax.reload();
             })
         });

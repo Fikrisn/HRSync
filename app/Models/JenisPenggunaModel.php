@@ -23,7 +23,7 @@ class JenisPenggunaModel extends Model
     ];
 
     // Define the relationship with Pengguna
-    public function pengguna():BelongsTo {
-        return $this->belongsTo(PenggunaModel::class);
-    }
+    // public function pengguna():BelongsTo {
+    //     return $this->belongsTo(PenggunaModel::class);
+    // }
 }
