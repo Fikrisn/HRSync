@@ -104,7 +104,7 @@
                         searchable: true
                     },
                     {
-                        data: "jenis_pengguna.nama_jenis_pengguna",
+                        data: "jenispengguna.nama_jenis_pengguna",
                         className: "",
                         orderable: false,
                         searchable: false

@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [JenisPenggunaController::class, 'create'])->name('jenis_pengguna.create');   // menampilkan halaman form tambah jenis pengguna
         Route::post('/', [JenisPenggunaController::class, 'store'])->name('jenis_pengguna.store');         // menyimpan data jenis pengguna baru
         Route::get('/create_ajax', [JenisPenggunaController::class, 'create_ajax'])->name('jenis_pengguna.create_ajax'); // Menampilkan halaman form tambah jenis pengguna dengan ajax
-        Route::post('/ajax', [JenisPenggunaController::class, 'store_ajax']); // Menyimpan data jenis pengguna baru Ajax
+        Route::post('/ajax', [JenisPenggunaController::class, 'store_ajax'])->name('jenis_pengguna.store_ajax'); // Menyimpan data jenis pengguna baru Ajax
         Route::get('/{id}', [JenisPenggunaController::class, 'show']);       // menampilkan detail jenis pengguna
         Route::get('/{id}/show_ajax', [JenisPenggunaController::class, 'show_ajax']);
         Route::get('/{id}/edit', [JenisPenggunaController::class, 'edit']);  // menampilkan halaman form edit jenis pengguna

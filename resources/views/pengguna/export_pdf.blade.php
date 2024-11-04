@@ -42,20 +42,25 @@
         .font-11 {
             font-size: 11pt;
         }
-        .font-12 {
+        .font-12{
             font-size: 12pt;
         }
-        .font-13 {
+        .font-13{
             font-size: 13pt;
         }
-        .border-bottom-header {
+        .border-bottom-header{
             border-bottom: 1px solid;
         }
-        .border-all,
-        .border-all th,
-        .border-all td {
+        .border-all, .border-all th, .border-all td{
             border: 1px solid;
         }
+        .logo-image{
+            max-width: 100px; 
+            max-height: 100px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }    
     </style>
 </head>
 <body>
@@ -63,38 +68,38 @@
         <tr>
             <td width="15%" class="text-center"><img class="image" id="image" src="{{ asset('polinema.png') }}"></td>
             <td width="85%">
-                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN
-                    PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
-                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI
-                    MALANG</span>
-                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang
-                    65141</span>
-                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-
-                    105, 0341-404420, Fax. (0341) 404420</span>
+                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
+                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI MALANG</span>
+                <span class="text-center d-block font-10">JL, Soekarno-Hatta No.9 Malang 65141</span>
+                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-105 0341-404420, Fax. (0341) 404420</span>
                 <span class="text-center d-block font-10">Laman: www.polinema.ac.id</span>
             </td>
         </tr>
     </table>
-    <h3 class="text-center">LAPORAN DATA USER</h4>
-        <table class="border-all">
-            <thead>
+    <h3 class="text-center">Data Pengguna</h3>
+    <table class="border-all">
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th>Jenis Pengguna ID</th>
+                <th>Username</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>NIP</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($pengguna as $key => $user)
                 <tr>
-                    <th class="text-center">No</th>
-                    <th>Username</th>
-                    <th>Nama</th>
-                    <th>Level</th>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td>{{ $user->id_pengguna }}</td>
+                    <td>{{ $user->username }}</td>
+                    <td>{{ $user->nama }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->NIP }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($user as $b)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $b->username }}</td>
-                        <td>{{ $b->nama }}</td>
-                        <td>{{ $b->level->level_nama }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>
