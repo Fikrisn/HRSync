@@ -108,7 +108,7 @@
         /* Section styling */
         /* Gaya untuk bagian kontak */
         .section {
-            padding: 60px 0; /* Menambahkan ruang atas dan bawah */
+            padding:0 10px; /* Menambahkan ruang atas dan bawah */
             background-color: #f9f9f9; /* Warna latar belakang */
         }
 
@@ -396,9 +396,7 @@
             width: 150px; /* Adjust logo size as needed */
             margin-bottom: 20px; /* Space below the logo */
         }
-
-
-        
+       
     </style>
 </head>
 <body>
