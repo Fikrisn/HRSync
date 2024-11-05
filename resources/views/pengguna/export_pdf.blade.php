@@ -81,7 +81,7 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
-                <th>Jenis Pengguna ID</th>
+                <th>ID Pengguna</th>
                 <th>Username</th>
                 <th>Nama</th>
                 <th>Email</th>

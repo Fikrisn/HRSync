@@ -369,10 +369,10 @@ class PenggunaController extends Controller
 
     public function export_pdf()
     {
-        $pengguna = PenggunaModel::select('id_jenis_pengguna', 'username', 'nama', 'email', 'NIP')
+        $pengguna = PenggunaModel::select('id_pengguna', 'username', 'nama', 'email', 'NIP')
             ->get();
         $pdf = Pdf::loadView('pengguna.export_pdf', ['pengguna' => $pengguna]);
-        $pdf->setPaper('a4', 'portrait');
+        $pdf->setPaper('a4', 'potrait');
         $pdf->setOption("isRemoteEnabled", true);
         $pdf->render();
         return $pdf->stream('Data Pengguna ' . date('Y-m-d H:i:s') . '.pdf');

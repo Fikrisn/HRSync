@@ -77,11 +77,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'kegiatan', 'middleware' => ['authorize:ADM,MNG,STF']], function () {
         Route::get('/', [KegiatanController::class, 'index']);               // Display main page for kegiatan
-        Route::post('/list', [KegiatanController::class, 'list']);           // Display kegiatan data as JSON for DataTables
+        Route::post('/list', [KegiatanController::class, 'list'])->name('kegiatan.list');           // Display kegiatan data as JSON for DataTables
         Route::get('/create', [KegiatanController::class, 'create']);        // Display form for adding kegiatan
         Route::post('/', [KegiatanController::class, 'store']);              // Store new kegiatan data
-        Route::get('/create_ajax', [KegiatanController::class, 'create_ajax']); // Display form for adding kegiatan via AJAX
-        Route::post('/ajax', [KegiatanController::class, 'store_ajax']);     // Store new kegiatan data via AJAX
+        Route::get('/create_ajax', [KegiatanController::class, 'create_ajax'])->name('kegiatan.create_ajax'); // Display form for adding kegiatan via AJAX
+        Route::post('/ajax', [KegiatanController::class, 'store_ajax'])->name('kegiatan.store_ajax');     // Store new kegiatan data via AJAX
         Route::get('/{id}', [KegiatanController::class, 'show']);            // Display kegiatan details
         Route::get('/{id}/show_ajax', [KegiatanController::class, 'show_ajax']); // Display kegiatan details via AJAX
         Route::get('/{id}/edit', [KegiatanController::class, 'edit']);       // Display form for editing kegiatan

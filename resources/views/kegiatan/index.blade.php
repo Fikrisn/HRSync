@@ -20,17 +20,15 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_kegiatan">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Judul Kegiatan</th>
-                        <th>Deskripsi</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Selesai</th>
-                        <th>Jenis Kegiatan</th>
-                        <th>Dokumen</th>
-                        <th>Jenis Pengguna</th>
-                        <th>Nama</th>
-                        <th>ID Pengguna</th>
-                        <th>Aksi</th>
+                        <th style="width: 5%;">ID</th>
+                        <th style="width: 15%;">Judul Kegiatan</th>
+                        <th style="width: 20%;">Deskripsi</th>
+                        <th style="width: 10%;">Tanggal Mulai</th>
+                        <th style="width: 10%;">Tanggal Selesai</th>
+                        <th style="width: 10%;">Jenis Kegiatan</th>
+                        <th style="width: 10%;">PIC</th>
+                        <th style="width: 10%;">Anggota</th>
+                        <th style="width: 10%;">Aksi</th>
                     </tr>
                 </thead>
             </table>
@@ -50,23 +48,22 @@
 
         var dataKegiatan;
         $(document).ready(function() {
-            var dataKegiatan = $('#table_kegiatan').DataTable({
-                processing: true,
+            dataKegiatan = $('#table_kegiatan').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('kegiatan/list') }}",
+                    "url": "{{ route('kegiatan.list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d){
-                        d.id_kegiatan = $('#id_kegiatan').val();
+                    "data": function (d) {
+                        d.id_jenis_kegiatan = $('#id_jenis_kegiatan').val();
                     }
                 },
                 columns: [
                     {
-                        data: "DT_RowIndex",
+                        data: "id_kegiatan",
                         className: "text-center",
-                        orderable: false,
-                        searchable: false
+                        orderable: true,
+                        searchable: true
                     },
                     {
                         data: "judul_kegiatan",
@@ -93,31 +90,19 @@
                         searchable: true
                     },
                     {
-                        data: "id_jenis_kegiatan",
+                        data: "nama_jenis_kegiatan",
                         className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "id_dokumen",
+                        data: "pic",
                         className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "jenis_pengguna",
-                        className: "",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "nama",
-                        className: "",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "id_pengguna",
+                        data: "anggota",
                         className: "",
                         orderable: true,
                         searchable: true
@@ -130,9 +115,10 @@
                     }
                 ]
             });
-            $('#id_kegiatan').on('change',function(){
+
+            $('#id_jenis_kegiatan').on('change', function() {
                 dataKegiatan.ajax.reload();
-            })
+            });
         });
     </script>
 @endpush

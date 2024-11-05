@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class PenggunaModel extends Authenticatable
 {
@@ -36,5 +37,10 @@ class PenggunaModel extends Authenticatable
 
     public function getRole() {
         return $this->jenisPengguna->jenis_kode;
+    }
+
+    public function kegiatan(): BelongsToMany
+    {
+        return $this->belongsToMany(KegiatanModel::class, 'kegiatan_anggota', 'id_pengguna', 'id_kegiatan');
     }
 }

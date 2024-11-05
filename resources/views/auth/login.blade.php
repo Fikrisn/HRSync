@@ -37,7 +37,7 @@
             background-size: cover; /* Ensures the image covers the entire area */
             background-position: center; /* Centers the background image */
             background-repeat: no-repeat; /* Prevents the image from repeating */
-            filter: blur(1px); /* Adjust blur amount here (increase or decrease as needed) */
+            filter: blur(5px); /* Adjust blur amount here (increase or decrease as needed) */
             z-index: -1; /* Send to the back */
         }
 

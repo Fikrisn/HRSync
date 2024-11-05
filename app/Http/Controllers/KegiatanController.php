@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanModel;
+use App\Models\JenisKegiatanModel;
+use App\Models\PenggunaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -26,13 +28,25 @@ class KegiatanController extends Controller
         return view('kegiatan.index', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
     }
 
-    public function list(Request $request){
-        $kegiatan = KegiatanModel::select('id_kegiatan', 'judul_kegiatan', 'deskripsi_kegiatan', 'tanggal_mulai', 'tanggal_selesai', 'id_jenis_kegiatan', 'id_dokumen', 'jenis_pengguna', 'nama', 'id_pengguna');
-        if($request->id_kegiatan){
+    public function list(Request $request)
+    {
+        $kegiatan = KegiatanModel::with(['jenisKegiatan', 'pic', 'anggota'])->select('id_kegiatan', 'judul_kegiatan', 'deskripsi_kegiatan', 'tanggal_mulai', 'tanggal_selesai', 'id_jenis_kegiatan');
+
+        if ($request->id_kegiatan) {
             $kegiatan->where('id_kegiatan', $request->id_kegiatan);
         }
+
         return DataTables::of($kegiatan)
             ->addIndexColumn()
+            ->addColumn('nama_jenis_kegiatan', function ($kegiatan) {
+                return $kegiatan->jenisKegiatan->nama_jenis_kegiatan;
+            })
+            ->addColumn('pic', function ($kegiatan) {
+                return $kegiatan->pic ? $kegiatan->pic->nama : 'N/A';
+            })
+            ->addColumn('anggota', function ($kegiatan) {
+                return $kegiatan->anggota->pluck('nama')->implode(', ');
+            })
             ->addColumn('aksi', function ($kegiatan) {
                 $btn = '<button onclick="modalAction(\'' . url('/kegiatan/' . $kegiatan->id_kegiatan . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/kegiatan/' . $kegiatan->id_kegiatan . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
@@ -43,49 +57,11 @@ class KegiatanController extends Controller
             ->make(true);
     }
 
-    public function create(){
-        $breadcrumb = (object)[
-            'title'=>'Tambah Kegiatan',
-            'list'=>['Home','Kegiatan','Tambah']
-        ];
-        $page = (object)[
-            'title'=>'Tambah kegiatan baru'
-        ];
-        $activeMenu = 'kegiatan';
-        $kegiatan = KegiatanModel::all();
-        return view('kegiatan.create', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
-    }
-
-    public function store(Request $request){
-        $request->validate([
-            'judul_kegiatan' => 'required|string|max:100',
-            'deskripsi_kegiatan' => 'required|string',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'id_jenis_kegiatan' => 'required|integer',
-            'id_dokumen' => 'required|integer',
-            'jenis_pengguna' => 'required|string',
-            'nama' => 'required|string|max:100',
-            'id_pengguna' => 'required|integer'
-        ]);
-        KegiatanModel::create([
-            'judul_kegiatan' => $request->judul_kegiatan,
-            'deskripsi_kegiatan' => $request->deskripsi_kegiatan,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
-            'id_jenis_kegiatan' => $request->id_jenis_kegiatan,
-            'id_dokumen' => $request->id_dokumen,
-            'jenis_pengguna' => $request->jenis_pengguna,
-            'nama' => $request->nama,
-            'id_pengguna' => $request->id_pengguna
-        ]);
-        return redirect('/kegiatan')->with('success', 'Data kegiatan berhasil disimpan');
-    }
-
     public function create_ajax()
     {
-        $kegiatan = KegiatanModel::select('id_kegiatan', 'judul_kegiatan')->get();
-        return view('kegiatan.create_ajax')->with('kegiatan', $kegiatan);
+        $jenis_kegiatan = JenisKegiatanModel::select('id_jenis_kegiatan', 'nama_jenis_kegiatan')->get();
+        $pengguna = PenggunaModel::select('id_pengguna', 'nama')->get();
+        return view('kegiatan.create_ajax', ['jenis_kegiatan' => $jenis_kegiatan, 'pengguna' => $pengguna]);
     }
 
     public function store_ajax(Request $request)
@@ -97,10 +73,9 @@ class KegiatanController extends Controller
                 'tanggal_mulai' => 'required|date',
                 'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
                 'id_jenis_kegiatan' => 'required|integer',
-                'id_dokumen' => 'required|integer',
-                'jenis_pengguna' => 'required|string',
-                'nama' => 'required|string|max:100',
-                'id_pengguna' => 'required|integer'
+                'pic_id' => 'required|integer',
+                'anggota_id' => 'required|array|min:1|max:6',
+                'anggota_id.*' => 'integer'
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -113,13 +88,23 @@ class KegiatanController extends Controller
                 ]);
             }
 
-            KegiatanModel::create($request->all());
+            $kegiatan = KegiatanModel::create([
+                'judul_kegiatan' => $request->judul_kegiatan,
+                'deskripsi_kegiatan' => $request->deskripsi_kegiatan,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_selesai' => $request->tanggal_selesai,
+                'id_jenis_kegiatan' => $request->id_jenis_kegiatan,
+                'pic_id' => $request->pic_id
+            ]);
+
+            $kegiatan->anggota()->sync($request->anggota_id);
+
             return response()->json([
                 'status' => true,
                 'message' => 'Data kegiatan berhasil disimpan'
             ]);
         }
-        redirect('/');
+        return redirect('/');
     }
 
     public function show(string $id_kegiatan){
