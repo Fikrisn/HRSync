@@ -75,7 +75,7 @@ Route::middleware(['auth'])->group(function () {
     });
     
 
-    Route::group(['prefix' => 'kegiatan', 'middleware' => ['authorize:ADM,MNG,STF']], function () {
+    Route::group(['prefix' => 'kegiatan', 'middleware' => ['authorize:ADM,PMN,DPC,DSA']], function () {
         Route::get('/', [KegiatanController::class, 'index']);               // Display main page for kegiatan
         Route::post('/list', [KegiatanController::class, 'list'])->name('kegiatan.list');           // Display kegiatan data as JSON for DataTables
         Route::get('/create', [KegiatanController::class, 'create']);        // Display form for adding kegiatan

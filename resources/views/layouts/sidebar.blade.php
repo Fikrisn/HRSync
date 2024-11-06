@@ -20,6 +20,7 @@
         </a>
       </li>
       @if(auth()->user()->jenispengguna->jenis_kode == "ADM")
+      <li class="nav-header">Data Pengguna</li>
         <li class="nav-item">
           <a href="{{ url('/jenis_pengguna')}}" class="nav-link {{($activeMenu == 'jenis_pengguna')? 'active' : ''}}">
             <i class="nav-icon fa-solid fa-users-gear"></i>
@@ -32,6 +33,13 @@
             <p>Data Dosen</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ url('/pengguna')}}" class="nav-link {{($activeMenu == 'pengguna')? 'active' : ''}}">
+            <i class="nav-icon fa-solid fa-coins"></i>
+            <p>Poin Dosen</p>
+          </a>
+        </li>
+        <li class="nav-header">Data Kegiatan</li>
       <li class="nav-item">
         <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'kegiatan')? 'active' : ''}}">
           <i class="nav-icon fas fa-bookmark"></i>
@@ -45,21 +53,29 @@
         </a>
       </li>
       @endif
-      @if(auth()->user()->jenispengguna->pengguna_kode == "ADM")
+      @if(auth()->user()->jenispengguna->jenis_kode == "PMN")
+      <li class="nav-header">Data Kegiatan</li>
         <li class="nav-item">
           <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
             <i class="nav-icon fas fa-layer-group"></i>
             <p>Kegiatan</p>
           </a>
         </li>
-      <li class="nav-item">
-        <a href="{{ url('/supplier')}}" class="nav-link {{($activeMenu == 'supplier')? 'active' : ''}}">
-          <i class="nav-icon fas fa-city"></i>
-          <p>Poinku</p>
-        </a>
-      </li>
+        <li class="nav-item">
+          <a href="{{ url('/statistik')}}" class="nav-link {{($activeMenu == 'statistik')? 'active' : ''}}">
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>Statistik </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/pengguna')}}" class="nav-link {{($activeMenu == 'pengguna')? 'active' : ''}}">
+            <i class="nav-icon far fa-address-book"></i>
+            <p>Data Dosen</p>
+          </a>
+        </li>
       @endif
-      @if(auth()->user()->jenispengguna->jenisfzz_kode == "ADM")
+      @if(auth()->user()->jenispengguna->jenis_kode == "DPC")
+      <li class="nav-header">Data Kegiatan</li>
         <li class="nav-item">
           <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
             <i class="nav-icon fas fa-layer-group"></i>
@@ -76,6 +92,40 @@
           <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
             <i class="nav-icon fas fa-cubes"></i>
             <p>Statistik </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>Progress Kegiatan </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>Agenda Kegiatan </p>
+          </a>
+        </li>
+      @endif
+      @if(auth()->user()->jenispengguna->jenis_kode == "DSA")
+      <li class="nav-header">Data Kegiatan</li>
+        <li class="nav-item">
+          <a href="{{ url('/level')}}" class="nav-link {{($activeMenu == 'level')? 'active' : ''}}">
+            <i class="nav-icon fas fa-layer-group"></i>
+            <p>Kegiatan</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>Agenda Kegiatan </p>
+          </a>
+        </li>
+        <li class="nav-header">Poin</li>
+        <li class="nav-item">
+          <a href="{{ url('/pengguna')}}" class="nav-link {{($activeMenu == 'pengguna')? 'active' : ''}}">
+            <i class="nav-icon fa-solid fa-coins"></i>
+            <p>Poin Ku</p>
           </a>
         </li>
       @endif
