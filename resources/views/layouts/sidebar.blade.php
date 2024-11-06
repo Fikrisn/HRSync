@@ -83,18 +83,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ url('/user')}}" class="nav-link {{($activeMenu == 'user')? 'active' : ''}}">
-            <i class="nav-icon fas fa-user"></i>
-            <p>Data Dosen</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
-            <i class="nav-icon fas fa-cubes"></i>
-            <p>Statistik </p>
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
             <i class="nav-icon fas fa-cubes"></i>
             <p>Progress Kegiatan </p>
@@ -104,6 +92,19 @@
           <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
             <i class="nav-icon fas fa-cubes"></i>
             <p>Agenda Kegiatan </p>
+          </a>
+        </li>
+        <li class="nav-header">Manage Pengguna</li>
+        <li class="nav-item">
+          <a href="{{ url('/user')}}" class="nav-link {{($activeMenu == 'user')? 'active' : ''}}">
+            <i class="nav-icon fas fa-user"></i>
+            <p>Data Dosen</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/stok')}}" class="nav-link {{($activeMenu == 'stok')? 'active' : ''}}">
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>Statistik </p>
           </a>
         </li>
       @endif
