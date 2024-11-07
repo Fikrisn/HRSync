@@ -88,21 +88,40 @@ class KegiatanController extends Controller
                 ]);
             }
 
-            $kegiatan = KegiatanModel::create([
-                'judul_kegiatan' => $request->judul_kegiatan,
-                'deskripsi_kegiatan' => $request->deskripsi_kegiatan,
-                'tanggal_mulai' => $request->tanggal_mulai,
-                'tanggal_selesai' => $request->tanggal_selesai,
-                'id_jenis_kegiatan' => $request->id_jenis_kegiatan,
-                'pic_id' => $request->pic_id
-            ]);
+            try {
+                DB::beginTransaction();
 
-            $kegiatan->anggota()->sync($request->anggota_id);
+                $kegiatan = KegiatanModel::create([
+                    'judul_kegiatan' => $request->judul_kegiatan,
+                    'deskripsi_kegiatan' => $request->deskripsi_kegiatan,
+                    'tanggal_mulai' => $request->tanggal_mulai,
+                    'tanggal_selesai' => $request->tanggal_selesai,
+                    'id_jenis_kegiatan' => $request->id_jenis_kegiatan,
+                    'pic_id' => $request->pic_id
+                ]);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Data kegiatan berhasil disimpan'
-            ]);
+                $anggotaIds = $request->anggota_id;
+
+                foreach ($anggotaIds as $anggotaId) {
+                    if (empty($anggotaId)) continue;
+
+                    $kegiatan->anggota()->attach($anggotaId);
+                }
+
+                DB::commit();
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data kegiatan berhasil disimpan'
+                ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                ]);
+            }
         }
         return redirect('/');
     }

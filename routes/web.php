@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PoinDosenController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KegiatanController;
@@ -81,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [KegiatanController::class, 'create']);        // Display form for adding kegiatan
         Route::post('/', [KegiatanController::class, 'store']);              // Store new kegiatan data
         Route::get('/create_ajax', [KegiatanController::class, 'create_ajax'])->name('kegiatan.create_ajax'); // Display form for adding kegiatan via AJAX
-        Route::post('/ajax', [KegiatanController::class, 'store_ajax'])->name('kegiatan.store_ajax');     // Store new kegiatan data via AJAX
+        Route::post('/ajax', [KegiatanController::class, 'store_ajax']);     // Store new kegiatan data via AJAX
         Route::get('/{id}', [KegiatanController::class, 'show']);            // Display kegiatan details
         Route::get('/{id}/show_ajax', [KegiatanController::class, 'show_ajax']); // Display kegiatan details via AJAX
         Route::get('/{id}/edit', [KegiatanController::class, 'edit']);       // Display form for editing kegiatan
@@ -152,6 +153,11 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/profil/{id}', [ProfilController::class, 'update'])->name('profil.update');
         Route::post('/profil/upload', [ProfilController::class, 'uploadProfileImage'])->name('profil.upload');
         Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index')->middleware('auth');
+    });
+
+    Route::group(['prefix' =>'poindosen', 'middleware'=>'authorize:ADM,MNG'],function(){
+        Route::get('/', [PoinDosenController::class, 'index'])->name('poindosen')->middleware('auth');
+        Route::get('/export_pdf', [PoinDosenController::class, 'export_pdf'])->name('poindosen.export_pdf')->middleware('auth');
     });
 
     // Route::middleware(['auth'])->group(function () {

@@ -34,25 +34,25 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ url('/pengguna')}}" class="nav-link {{($activeMenu == 'pengguna')? 'active' : ''}}">
-            <i class="nav-icon fa-solid fa-coins"></i>
-            <p>Poin Dosen</p>
+          <a href="{{ url('/poindosen')}}" class="nav-link {{($activeMenu == 'poindosen')? 'active' : ''}}">
+              <i class="nav-icon fa-solid fa-coins"></i>
+              <p>Poin Dosen</p>
           </a>
         </li>
         <li class="nav-header">Data Kegiatan</li>
-      <li class="nav-item">
-        <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'kegiatan')? 'active' : ''}}">
-          <i class="nav-icon fas fa-bookmark"></i>
-          <p>Kegiatan</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url('/statistik')}}" class="nav-link {{($activeMenu == 'statistik')? 'active' : ''}}">
-          <i class="nav-icon fas fa-cubes"></i>
-          <p>Statistik </p>
-        </a>
-      </li>
-      @endif
+        <li class="nav-item">
+          <a href="{{ url('/kegiatan')}}" class="nav-link {{($activeMenu == 'kegiatan')? 'active' : ''}}">
+            <i class="nav-icon fas fa-bookmark"></i>
+            <p>Kegiatan</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/statistik')}}" class="nav-link {{($activeMenu == 'statistik')? 'active' : ''}}">
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>Statistik </p>
+          </a>
+        </li>
+        @endif
       @if(auth()->user()->jenispengguna->jenis_kode == "PMN")
       <li class="nav-header">Data Kegiatan</li>
         <li class="nav-item">

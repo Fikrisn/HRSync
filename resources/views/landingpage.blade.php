@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('polinema.png') }}" type="image/png">
     <title>HRSync</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-k6RqeWeci5ZR/Lv4MR0sA0FfDOM7TQ0m1H0gG4w9gG8Z2C6h5zv6oX+E8s5i1YbXG3M1uO4p5c0w5o3u0g7z9g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Reset and base styles */
         * {
@@ -16,7 +17,8 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #333;
-            background-color: #f4f6f8;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -35,22 +37,23 @@
 
         /* Header */
         .header {
-            background-color: #003366; /* Dark color for university elegance */
+            background-color: #003366;
             padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
         }
 
         .container {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Separate logo and menu */
-            max-width: 1200px;
-            margin: 0 auto;
+            justify-content: space-between;
         }
 
         .logo a {
             display: flex;
             align-items: center;
             text-decoration: none;
+            color: #ffffff;
         }
 
         .logo img {
@@ -60,42 +63,57 @@
 
         .logo-text {
             font-size: 35px;
-            margin-left: 1px;
-            color: #ffffff;
+            margin-left: 10px;
             font-family: Arial, Helvetica, sans-serif;
         }
 
         /* Navigation Menu */
         .menu ul {
             list-style: none;
-            margin: 0;
-            padding: 0;
             display: flex;
-            gap: 5px; /* Space between menu items */
-        }
-
-        .menu ul li {
-            display: inline;
+            gap: 15px;
         }
 
         .menu ul li a {
             color: #ffffff;
             text-decoration: none;
             font-size: 1em;
-            padding: 10px 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
         .menu ul li a:hover {
-            color: #f0f0f0; /* Slight color change on hover */
+            background-color: #0057b7;
         }
 
+        /* Login Button */
         .login-button {
-            background-color: #0057b7; /* Button color for contrast */
+            background-color: #0057b7;
             padding: 8px 12px;
             border-radius: 5px;
             color: #ffffff;
             font-weight: bold;
             text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: #003366;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .menu ul {
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
         }
 
         /* Main content */
@@ -106,167 +124,25 @@
         }
 
         /* Section styling */
-        /* Gaya untuk bagian kontak */
         .section {
-            padding:0 10px; /* Menambahkan ruang atas dan bawah */
-            background-color: #f9f9f9; /* Warna latar belakang */
+            padding: 20px 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
         }
 
         .section-title {
-            font-size: 35px; /* Ukuran font untuk judul */
-            font-weight: bold; /* Menebalkan font */
-            text-align: left; /* Rata tengah */
-            margin-bottom: 30px; /* Ruang bawah judul */
-            color: #333; /* Warna teks judul */
-        }
-
-        .institution-name {
-            font-size: 1.8rem; /* Ukuran font untuk nama institusi */
-            margin: 10px 0; /* Ruang atas dan bawah */
-            color: #007bff; /* Warna teks biru */
-        }
-
-        .address {
-            font-size: 1rem; /* Ukuran font untuk alamat */
-            color: #555; /* Warna teks alamat */
-        }
-
-        .card-body {
-            margin-top: 40px; /* Ruang atas untuk card */
-            padding: 20px; /* Ruang dalam untuk card */
-            background-color: #fff; /* Warna latar belakang card */
-            border-radius: 8px; /* Membulatkan sudut card */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
-        }
-
-        .map-container {
-            margin-top: 20px; /* Ruang atas untuk peta (lebih kecil untuk menjaga keselarasan) */
-            text-align: center; /* Rata tengah untuk peta */
-        }
-
-        .map-container iframe {
-            width: 100%; /* Lebar iframe 100% */
-            height: 400px; /* Tinggi iframe yang lebih besar */
-            border: 0; /* Menghilangkan border */
-        }
-
-
-        iframe {
-            width: 100%; /* Lebar iframe 100% */
-            height: 300px; /* Tinggi iframe */
-            border: 0; /* Menghilangkan border */
-        }
-
-
-        .contact-header {
-            font-size: 1.5rem; /* Ukuran font untuk header kontak */
-            font-weight: bold; /* Menebalkan font */
-            margin-bottom: 15px; /* Ruang bawah header */
-            color: #333; /* Warna teks header */
-        }
-
-        .contact-list {
-            list-style: none; /* Menghilangkan bullet point */
-            padding: 0; /* Menghilangkan padding */
-        }
-
-        .contact-list li {
-            margin-bottom: 10px; /* Ruang bawah untuk setiap item */
-        }
-
-        .contact-list a {
-            text-decoration: none; /* Menghilangkan garis bawah */
-            color: #007bff; /* Warna teks link */
-            display: flex; /* Menggunakan flexbox */
-            align-items: center; /* Rata tengah vertikal */
-        }
-
-        .contact-list a:hover {
-            text-decoration: underline; /* Garis bawah saat hover */
-        }
-
-        .icon {
-            margin-right: 10px; /* Ruang kanan untuk ikon */
-            font-size: 1.2rem; /* Ukuran ikon */
-        }
-
-        .working-hours {
-            margin-top: 5px; /* Ruang atas untuk jam kerja */
-            padding-left: 20px; /* Indentasi jam kerja */
-            font-size: 0.9rem; /* Ukuran font untuk jam kerja */
-            color: #555; /* Warna teks jam kerja */
-        }
-
-
-        /* Breadcrumb */
-        .breadcrumb {
-            display: flex;
-            list-style: none;
-            margin-bottom: 1rem;
-            color: #555;
-        }
-
-        .breadcrumb li:not(:last-child)::after {
-            content: ">";
-            margin: 0 0.5rem;
-        }
-
-        .breadcrumb a {
-            color: #4a90e2;
-            text-decoration: none;
-        }
-
-        /* Photo Slider */
-        .photo-slider {
-            margin-bottom: 2rem;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            height: 600px;
-        }
-
-        .slider-container {
-            position: relative;
-            max-width: 100%;
-            margin: 0 auto;
-            overflow: hidden;
-            display: flex; /* Align images horizontally */
-            width: 100%; /* Full width of the container */
-        }
-
-        .slider-image {
-            width: 100%;
-            height: auto;
-            display: none;
-            min-height: 100%;
-            object-fit: cover;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .slider-image.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Welcome section */
-        .welcome h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: #1b2a49;
-        }
-
-        .welcome p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #555;
-        }
-
-        /* Feature cards */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            font-size: 35px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
         }
 
         .feature-card {
@@ -279,13 +155,6 @@
 
         .feature-card:hover {
             transform: translateY(-5px);
-        }
-
-        .feature-card h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #4a90e2;
         }
 
         /* Footer */
@@ -310,16 +179,11 @@
 
         .footer-section h3 {
             margin-bottom: 0.5rem;
-            font-size: 1.1rem;
             color: #4a90e2;
         }
 
         .footer-section ul {
             list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.25rem;
         }
 
         .footer-section a {
@@ -333,97 +197,84 @@
             font-size: 0.9rem;
         }
 
-        .logo a {
-            font-size: 50px;
-            font-weight: bold;
-            float: left;
-            font-family: Courier;
-            color: #364f6b;
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
         }
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .header .container {
-                flex-wrap: wrap;
-            }
-
-            .header nav {
-                width: 100%;
-                margin-top: 1rem;
-            }
-
-            .header nav ul {
-                flex-direction: column;
-            }
-
-            .header nav ul li {
-                margin-left: 0;
-                margin-bottom: 0.5rem;
-            }
+        .dark-mode .header {
+            background-color: #1b2a49;
         }
 
-        /* about */
-        .about-section {
-            padding: 50px 0;
-            background-color: #f9f9f9; /* Light background for contrast */
+        .dark-mode .menu ul li a {
+            color: #ffffff;
         }
 
-        .about-content {
-            text-align: center; /* Center text and logo */
+        .dark-mode .footer {
+            background-color: #1b2a49;
         }
 
-        .polinema-logo {
-            width: 150px; /* Adjust logo size as needed */
-            margin-bottom: 20px; /* Space below the logo */
+        /* Slider */
+        .photo-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .section-title {
-            font-size: 35px; /* Larger font size for the section title */
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slider-image {
+            min-width: 100%;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slider-image.active {
+            opacity: 1;
+        }
+
+        /* Welcome section */
+        .welcome h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #1b2a49;
             text-align: center;
-            margin-bottom: 30px; /* Space below the title */
-            color: #007bff; /* Blue color for the title */
         }
 
-        .about-card {
-            margin: 30px auto; /* Center the card */
-            border-radius: 15px; /* Rounded corners */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-            background-color: #ffffff; /* White background for the card */
-            padding: 30px; /* Inner padding */
+        .welcome p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555;
+            text-align: center;
         }
-
-        .polinema-logo {
-            width: 150px; /* Adjust logo size as needed */
-            margin-bottom: 20px; /* Space below the logo */
-        }
-       
     </style>
 </head>
 <body>
     <div class="layout">
         <header class="header">
             <div class="container">
-                <!-- Left-aligned logo and text -->
                 <div class="logo">
                     <a href="https://polinema.ac.id">
                         <img src="polinema.png" alt="Polinema Logo" style="height: 40px; vertical-align: middle;">
                         <span class="logo-text">HRSync</span>
                     </a>
                 </div>
-                
-                <!-- Right-aligned navigation menu -->
                 <nav class="menu">
                     <ul>
                         <li><a href="#home" onclick="showSection('home')">Home</a></li>
                         <li><a href="#about" onclick="showSection('about')">About</a></li>
                         <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
-                        <li><a href="{{ route('login') }}" class="login-button btn btn-primary" id="loginButton">Login</a></li>
+                        <li><a href="{{ route('login') }}" class="login-button" id="loginButton">Login</a></li>
                     </ul>
                 </nav>
             </div>
         </header>
         <main>
-            <!-- Home Section -->
             <section id="home" class="section">
                 <section class="photo-slider">
                     <div class="slider-container">
@@ -433,81 +284,49 @@
                     </div>
                 </section>
                 <section class="welcome">
-                    <h2>Welcome to Our HR Management System</h2>
+                    <h2>Welcome to JTI HR Management System</h2>
                     <p>
-                        Welcome to our innovative HR Management System, tailored specifically for Politeknik Negeri Malang. Our platform is designed to facilitate efficient HR operations, empowering our staff and faculty with the tools they need to thrive in their roles.
+                    Sistem ini dirancang khusus untuk mempermudah pengelolaan kepegawaian dosen di Jurusan Teknologi Informasi Politeknik Negeri Malang. Dengan fitur-fitur unggulan seperti manajemen kegiatan dan point yang didapatkan setiap dosen, sistem ini memberikan kemudahan dan efisiensi dalam memonitor dan mendokumentasikan seluruh aktivitas dosen. Akses data yang cepat, transparan, dan aman membantu meningkatkan kinerja akademik dan administrasi.
                     </p>
                 </section>
                 <br>
                 <section class="features">
                     <div class="feature-card">
-                        <h3>Employee Management</h3>
-                        <p>Easily manage employee information, roles, and responsibilities.</p>
+                        <h3><a href="https://jti.polinema.ac.id/playit2024/" class="feature-link">JTI Play IT! 2024</a></h3>
+                        <p>PLAY IT! (Competition for Learning and Advancing Youth in Information Technology) adalah kompetisi nasional yang diselenggarakan oleh Jurusan Teknologi Informasi, Politeknik Negeri Malang, yang bertujuan untuk mendorong generasi muda Indonesia dalam mengembangkan kreativitas dan inovasi di bidang teknologi. Kompetisi ini terbuka bagi mahasiswa/i perguruan tinggi dan siswa/i SMA/SMK sederajat dari seluruh Indonesia, sebagai ajang untuk menampilkan kemampuan dan solusi inovatif mereka dalam memanfaatkan teknologi informasi dengan memperhatikan poin (SDG's) atau pembangunan berkelanjutan..</p>
                     </div>
                     <div class="feature-card">
-                        <h3>Performance Tracking</h3>
-                        <p>Monitor employee performance with clear metrics and feedback.</p>
+                        <h3><a href="https://jti.polinema.ac.id/index.php/2024/08/08/jti-polinema-gelar-workshop-kurikulum-berbasis-obe-untuk-prodi-d4-teknik-informatika-dan-d4-sistem-informasi-bisnis/" class="feature-link">Workshop Kurikulum Berbasis OBE</a></h3>
+                        <p>Workshop ini bertujuan untuk menyelaraskan kurikulum dengan pendekatan OBE, guna menghasilkan lulusan yang kompeten dan siap bersaing di dunia kerja.</p>
                     </div>
                     <div class="feature-card">
-                        <h3>Training & Development</h3>
-                        <p>Facilitate employee growth with tailored training programs and development plans.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Employee Engagement</h3>
-                        <p>Enhance workplace culture through surveys and feedback mechanisms to foster engagement.</p>
+                        <h3><a href="https://jti.polinema.ac.id/index.php/2024/06/24/program-kewirausahaan-jti-polinema-dibuka-kembali/" class="feature-link">Program Kewirausahaan JTI Polinema</a></h3>
+                        <p>Program ini saat ini sudah berjalan di tahun kedua dan memacu mahasiswa untuk berkembang dan memberdayakan potensi wirausaha setelah lulus kuliah.</p>
                     </div>
                 </section>
+
                 
                 <br>
                 <section class="welcome">
-                    <h2>Empowering Our Faculty and Staff</h2>
+                    <h2>Fitur unggulan website ini </h2>
                     <p>
-                        At Polinema, we understand the unique challenges faced by our faculty and administrative staff. Our HR Management System is designed to provide seamless access to essential resources, enabling staff to focus on their primary roles and responsibilities.
+                    Sistem Informasi Manajemen SDM JTI merupakan sistem informasu yang dibuat untuk mengatur pemerataan tugas SDM di JTI. Harapannya dengan adanya sistem informasi ini dapat memantau persebaran tugas yang ada di JTI. Dengan pemantauan yang mudah, diharapkan beban kerja SDM di JTI bisa merata. 
                     </p>
                 </section>
                 <br>
                 <section class="features">
                     <div class="feature-card">
-                        <h3>Streamlined Recruitment & Onboarding</h3>
-                        <p>Empower your hiring teams with intuitive recruitment tools and onboarding workflows that make it easier to bring new talent into our community, allowing staff to concentrate on their educational missions.</p>
+                        <h3>Pemerataan Kegiatan Dosen</h3>
+                        <p>Sistem ini membantu admin dan pimpinan dalam pemilihan dosen yang bertugas dalam setiap kegiatan yang dimiliki Jurusan Teknologi Informasi  </p>
                     </div>
                     <div class="feature-card">
-                        <h3>Customized Training & Development</h3>
-                        <p>Support faculty and staff growth with personalized training programs that enhance skills and prepare them for future challenges, fostering a culture of continuous learning.</p>
+                        <h3>Monitoring Kegiatan dosen</h3>
+                        <p> HRSync membantu Dosen yang bertugas menjadi PIC untuk memonitoring progress selama kegiatan berlangsung</p>
                     </div>
                     <div class="feature-card">
-                        <h3>Strengthening Employee Engagement</h3>
-                        <p>Build a vibrant workplace culture by implementing engagement initiatives, such as surveys and feedback mechanisms, that ensure every voice is heard and valued, thus promoting a sense of belonging.</p>
+                        <h3>Statistik Kinerja Dosen</h3>
+                        <p> HRSync memberikan statistik kinerja dosen kepada agar sebagai bahan evaluasi dan laporan kepada Pimpinan</p>
                     </div>
-                </section>
-                
-                <br>
-                <section class="welcome">
-                    <h2>Streamlined HR Processes</h2>
-                    <p>
-                        Our HR Management System simplifies various HR tasks, from recruitment to employee onboarding and training. By centralizing these processes, we enhance collaboration and communication within our institution, fostering a supportive work environment that promotes efficiency and effectiveness.
-                    </p>
-                </section>
-                <br>
-                <section class="features">
-                    <div class="feature-card">
-                        <h3>Efficient Recruitment & Onboarding</h3>
-                        <p>Optimize the hiring journey with user-friendly recruitment tools that simplify candidate selection and onboarding, ensuring new employees feel welcomed and prepared.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Comprehensive Training & Development</h3>
-                        <p>Empower staff through customized training programs designed to enhance skills and foster professional growth, aligning with the institution's goals.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Fostering Employee Engagement</h3>
-                        <p>Create a thriving workplace culture by utilizing surveys and feedback mechanisms that encourage open communication and enhance employee satisfaction.</p>
-                    </div>
-                </section>
-                <br>
-                <section class="welcome">
-                    <p>
-                        Our HR Management System simplifies various HR tasks, from recruitment to employee onboarding and training. By centralizing these processes, we enhance collaboration and communication within our institution, fostering a supportive work environment that promotes efficiency and effectiveness.
-                    </p>
                 </section>
             </section>
 
@@ -515,7 +334,7 @@
             <section id="about" class="section about-section">
             <div class="container">
                 <div class="card about-card">
-                    <h2 class="section-title">About Us</h2>
+                    <h2 class="section-title">About Us</h 2>
                     <div class="card-body">
                         <div class="about-content text-center">
                             <img src="polinema.png" alt="Politeknik Negeri Malang Logo" class="polinema-logo">
@@ -601,13 +420,11 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <div class="footer-bottom">
-                    <strong>
-                        Copyright &copy; 2024-2025 
-                        <a href="https://polinema.ac.id" style="color: blue;">HRSync</a>.
-                    </strong> All rights reserved.
-                </div>                
-            </div>
+                <strong>
+                    Copyright &copy; 2024-2025 
+                    <a href="https://polinema.ac.id" style="color: blue;">HRSync</a>.
+                </strong> All rights reserved.
+            </div>                
         </footer>
     </div>
 
@@ -639,6 +456,26 @@
             slides[currentSlide].classList.add('active'); // Show new slide
         }
         setInterval(showSlides, 3000); // Change slide every 3 seconds
+
+        // Dark mode toggle
+        const toggleDarkMode = () => {
+            document.body.classList.toggle('dark-mode');
+        };
+
+        // Add a button for dark mode toggle
+        const darkModeButton = document.createElement('button');
+        darkModeButton.innerText = 'Toggle Dark Mode';
+        darkModeButton.style.position = 'fixed';
+        darkModeButton.style.top = '10px';
+        darkModeButton.style.right = '10px';
+        darkModeButton.style.padding = '10px';
+        darkModeButton.style.backgroundColor = '#0057b7';
+        darkModeButton.style.color = '#fff';
+        darkModeButton.style.border = 'none';
+        darkModeButton.style.borderRadius = '5px';
+        darkModeButton.style.cursor = 'pointer';
+        darkModeButton.onclick = toggleDarkMode;
+        document.body.appendChild(darkModeButton);
     </script>
 </body>
 </html>
