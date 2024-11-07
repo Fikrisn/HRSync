@@ -1,98 +1,72 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Laporan Data Jenis Pengguna</title>
     <style>
         body {
-            font-family: "Times New Roman", Times, serif;
-            margin: 6px 20px 5px 20px;
-            line-height: 15px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        td,
-        th {
-            padding: 4px 3px;
-        }
-        th {
-            text-align: left;
-        }
-        .d-block {
-            display: block;
-        }
-        img.image {
-            width: auto;
-            height: 80px;
-            max-width: 150px;
-            max-height: 150px;
-        }
-        .text-right {
-            text-align: right;
+            font-family: Arial, sans-serif;
         }
         .text-center {
             text-align: center;
         }
-        .p-1 {
-            padding: 5px 1px 5px 1px;
-        }
-        .font-10 {
-            font-size: 10pt;
-        }
         .font-11 {
-            font-size: 11pt;
-        }
-        .font-12 {
-            font-size: 12pt;
+            font-size: 11px;
         }
         .font-13 {
-            font-size: 13pt;
+            font-size: 13px;
         }
-        .border-bottom-header {
-            border-bottom: 1px solid;
+        .font-10 {
+            font-size: 10px;
         }
-        .border-all,
-        .border-all th,
-        .border-all td {
-            border: 1px solid;
+        .font-bold {
+            font-weight: bold;
+        }
+        .border-all {
+            border: 1px solid #000;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .border-all th, .border-all td {
+            border: 1px solid #000;
+            padding: 5px;
         }
     </style>
 </head>
 <body>
-    <table class="border-bottom-header">
+    <table width="100%">
         <tr>
-            <td width="15%" class="text-center"><img class="image" id="image" src="{{ asset('polinema.png') }}"></td>
+            <td width="15%">
+                <img src="{{ asset('logo.png') }}" alt="Logo" width="100">
+            </td>
             <td width="85%">
-                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN
-                    PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
-                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI
-                    MALANG</span>
-                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang
-                    65141</span>
-                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-
-                    105, 0341-404420, Fax. (0341) 404420</span>
+                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
+                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI MALANG</span>
+                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang 65141</span>
+                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-105, 0341-404420, Fax. (0341) 404420</span>
                 <span class="text-center d-block font-10">Laman: www.polinema.ac.id</span>
             </td>
         </tr>
     </table>
-    <h3 class="text-center">LAPORAN DATA LEVEL</h4>
-        <table class="border-all">
-            <thead>
+    <h3 class="text-center">LAPORAN DATA JENIS PENGGUNA</h3>
+    <table class="border-all">
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th>Kode Jenis Pengguna</th>
+                <th>Nama Jenis Pengguna</th>
+                <th>Bobot</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($jenis_pengguna as $jp)
                 <tr>
-                    <th class="text-center">No</th>
-                    <th>Kode level</th>
-                    <th>Nama level</th>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td>{{ $jp->jenis_kode }}</td>
+                    <td>{{ $jp->nama_jenis_pengguna }}</td>
+                    <td>{{ $jp->bobot }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($level as $b)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $b->level_kode }}</td>
-                        <td>{{ $b->level_nama }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>

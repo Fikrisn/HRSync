@@ -1,30 +1,32 @@
-@empty($level)
+@empty($jenis_pengguna)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" arialabel="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/level') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/jenis_pengguna') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/level/' . $level->level_id . '/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/jenis_pengguna/' . $jenis_pengguna->id_jenis_pengguna . '/delete_ajax') }}" method="POST" id="form-delete">
         @csrf
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Level</h5>
-                    <button type="button" class="close" data-dismiss="modal" arialabel="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Jenis Pengguna</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
@@ -34,66 +36,80 @@
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
                             <th class="text-right col-3">Kode :</th>
-                            <td class="col-9">{{ $level->level_kode }}</td>
+                            <td class="col-9">{{ $jenis_pengguna->jenis_kode }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Nama :</th>
-                            <td class="col-9">{{ $level->level_nama }}</td>
+                            <td class="col-9">{{ $jenis_pengguna->nama_jenis_pengguna }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">Bobot :</th>
+                            <td class="col-9">{{ $jenis_pengguna->bobot }}</td>
                         </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btnwarning">Batal</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
                     <button type="submit" class="btn btn-primary">Ya, Hapus</button>
                 </div>
             </div>
         </div>
     </form>
-    <script>
-        $(document).ready(function() {
-            $("#form-delete").validate({
-                rules: {},
-                submitHandler: function(form) {
-                    $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $(form).serialize(),
-                        success: function(response) {
-                            if (response.status) {
-                                $('#myModal').modal('hide');
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message
-                                });
-                                dataLevel.ajax.reload();
-                            } else {
-                                $('.error-text').text('');
-                                $.each(response.msgField, function(prefix, val) {
-                                    $('#error-' + prefix).text(val[0]);
-                                });
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Terjadi Kesalahan',
-                                    text: response.message
-                                });
-                            }
-                        }
-                    });
-                    return false;
-                },
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                }
-            });
-        });
-    </script>
 @endempty
+
+<style>
+    .modal-header.bg-primary {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+    }
+    .modal-header .close {
+        color: #fff;
+    }
+    .form-group label {
+        font-weight: bold;
+    }
+    .form-control {
+        border-radius: 0.25rem;
+    }
+    .error-text {
+        font-size: 0.875rem;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        $("#form-delete").validate({
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if (response.status) { // If success
+                            $('#myModal').modal('hide');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
+                            });
+                            dataUser.ajax.reload(); // Reload datatable
+                        } else { // If error
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan',
+                            text: 'Gagal mengirim data. Silakan coba lagi.'
+                        });
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>

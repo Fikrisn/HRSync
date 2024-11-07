@@ -1,59 +1,60 @@
-<form action="{{ url('/level/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
+<form action="{{ url('/jenis_pengguna/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Import Data Level</h5>
-                <button type="button" class="close" data-dismiss="modal" arialabel="Close"><span
+                <h5 class="modal-title" id="exampleModalLabel">Import Data Jenis Pengguna</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Download Template</label>
-                    <a href="{{ asset('template_level.xlsx') }}" class="btn btn-info btnsm" download><i
-                            class="fa fa-file-excel"></i>Download</a>
-                    <small id="error-level_id" class="error-text form-text textdanger"></small>
+                    <a href="{{ asset('template_jenis_pengguna.xlsx') }}" class="btn btn-info btn-sm" download><i
+                            class="fa fa-file-excel"></i> Download</a>
+                    <small id="error-jenis_pengguna_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Pilih File</label>
-                    <input type="file" name="file_level" id="file_level" class="form-control" required>
-                    <small id="error-file_level" class="error-text form-text textdanger"></small>
+                    <input type="file" name="file" id="file" class="form-control" required>
+                    <small id="error-file" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btnwarning">Batal</button>
+                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
                 <button type="submit" class="btn btn-primary">Upload</button>
             </div>
         </div>
     </div>
 </form>
+
 <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
         $("#form-import").validate({
             rules: {
-                file_level: {
+                file: {
                     required: true,
-                    extension: "xlsx"
+                    extension: "xlsx|xls"
                 },
             },
             submitHandler: function(form) {
-                var formData = new FormData(form); // Jadikan form ke FormData untuk menghandle file
+                var formData = new FormData(form); // Convert form to FormData to handle file
                 $.ajax({
                     url: form.action,
                     type: form.method,
-                    data: formData, // Data yang dikirim berupa FormData
-                    processData: false, // setting processData dan contentType ke false, untuk menghandle file
+                    data: formData, // Data sent as FormData
+                    processData: false, // Set processData and contentType to false to handle file
                     contentType: false,
                     success: function(response) {
-                        if (response.status) { // jika sukses
+                        if (response.status) { // If success
                             $('#myModal').modal('hide');
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            dataLevel.ajax.reload(); // reload datatable
-                        } else { // jika error
+                            dataUser.ajax.reload(); // Reload datatable
+                        } else { // If error
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {
                                 $('#error-' + prefix).text(val[0]);
@@ -64,6 +65,13 @@
                                 text: response.message
                             });
                         }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan',
+                            text: 'Gagal mengirim data. Silakan coba lagi.'
+                        });
                     }
                 });
                 return false;
