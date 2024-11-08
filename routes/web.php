@@ -9,6 +9,7 @@ use App\Http\Controllers\stokcontroller;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\StatistikController;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -97,7 +98,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/export_excel', [KegiatanController::class, 'export_excel']); // Export kegiatan data to Excel
         Route::get('/export_pdf', [KegiatanController::class, 'export_pdf']); // Export kegiatan data to PDF
     });
-    
 
     Route::group(['prefix' =>'profil'],function(){
         Route::get('/', [ProfilController::class, 'index'])->name('profil.index');
@@ -111,9 +111,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index')->middleware('auth');
     });
 
-    // Route::middleware(['auth'])->group(function () {
-    //     Route::get('/profil', [ProfilController::class, 'edit'])->name('profil.edit');
-    //     Route::put('/profil', [ProfilController::class, 'update'])->name('profil.update');
-    // });
+    Route::group(['prefix' => 'poindosen', 'middleware' => ['authorize:ADM,PMN,DPC,DSA']], function () {
+        Route::get('/', [PoinDosenController::class, 'index'])->name('poindosen.index');             // Display main page for poin_dosen
+        Route::post('/list', [PoinDosenController::class, 'list'])->name('poin_dosen.list');           // Display poin_dosen data as JSON for DataTables
+        Route::get('/create', [PoinDosenController::class, 'create']);        // Display form for adding poin_dosen
+        Route::post('/', [PoinDosenController::class, 'store']);              // Store new poin_dosen data
+        Route::get('/create_ajax', [PoinDosenController::class, 'create_ajax'])->name('poin_dosen.create_ajax'); // Display form for adding poin_dosen via AJAX
+        Route::post('/ajax', [PoinDosenController::class, 'store_ajax']);     // Store new poin_dosen data via AJAX
+        Route::get('/{id}', [PoinDosenController::class, 'show']);            // Display poin_dosen details
+        Route::get('/{id}/show_ajax', [PoinDosenController::class, 'show_ajax']); // Display poin_dosen details via AJAX
+        Route::get('/{id}/edit', [PoinDosenController::class, 'edit']);       // Display form for editing poin_dosen
+        Route::put('/{id}', [PoinDosenController::class, 'update']);          // Save updates to poin_dosen data
+        Route::get('/{id}/edit_ajax', [PoinDosenController::class, 'edit_ajax']); // Display form for editing poin_dosen via AJAX
+        Route::put('/{id}/update_ajax', [PoinDosenController::class, 'update_ajax']); // Save updates to poin_dosen data via AJAX
+        Route::get('/{id}/delete_ajax', [PoinDosenController::class, 'confirm_ajax']); // Display confirmation form for deleting poin_dosen via AJAX
+        Route::delete('/{id}/delete_ajax', [PoinDosenController::class, 'delete_ajax']); // Delete poin_dosen data via AJA
+    });
+
+    Route::group(['prefix'=> 'statistik' , 'middleware' => ['authorize:ADM,PMN,DPC,DSA']], function () {
+        Route::get('/', [StatistikController::class, 'index'])->name('statistik.index');
+    });
 
 });

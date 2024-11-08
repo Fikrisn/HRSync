@@ -61,33 +61,13 @@
         <i class="fas fa-expand-arrows-alt"></i>
       </a>
     </li>
-   <!-- Profile Menu -->
+    
+    <!-- Profile Menu -->
     <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#profileModal" href="#" id="profileMenu">
-            <i class="far fa-user"></i>
-        </a>
+      <a href="{{ route('profil.index') }}" class="nav-link" title="Edit Profil">
+        <i class="fas fa-user"></i>
+      </a>
     </li>
-
-    <!-- Modal for profile information -->
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="profileModalLabel">Profile User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Profile content -->
-                    <p><strong>Username:</strong> <span id="user-username"></span></p>
-                    <p>Login sebagai: <strong>Siswa</strong></p>
-                    <!-- Logout Button inside Modal -->
-                    <button class="btn btn-danger" id="logoutBtn">Logout</button>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <!-- Logout Menu -->
     <li class="nav-item">
