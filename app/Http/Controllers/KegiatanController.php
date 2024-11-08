@@ -25,7 +25,7 @@ class KegiatanController extends Controller
         ];
         $activeMenu ='kegiatan';
         $kegiatan = KegiatanModel::all();
-        return view('kegiatan.index', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
+        return view('admin.kegiatan.index', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
     }
 
     public function list(Request $request)
@@ -61,7 +61,7 @@ class KegiatanController extends Controller
     {
         $jenis_kegiatan = JenisKegiatanModel::select('id_jenis_kegiatan', 'nama_jenis_kegiatan')->get();
         $pengguna = PenggunaModel::select('id_pengguna', 'nama')->get();
-        return view('kegiatan.create_ajax', ['jenis_kegiatan' => $jenis_kegiatan, 'pengguna' => $pengguna]);
+        return view('admin.kegiatan.create_ajax', ['jenis_kegiatan' => $jenis_kegiatan, 'pengguna' => $pengguna]);
     }
 
     public function store_ajax(Request $request)
@@ -136,12 +136,12 @@ class KegiatanController extends Controller
             'title'=>'Detail kegiatan'
         ];
         $activeMenu = 'kegiatan';
-        return view('kegiatan.show', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
+        return view('admin.kegiatan.show', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
     }
 
     public function show_ajax(string $id) {
         $kegiatan = KegiatanModel::find($id);
-        return view('kegiatan.show_ajax', ['kegiatan' => $kegiatan]);
+        return view('admin.kegiatan.show_ajax', ['kegiatan' => $kegiatan]);
     }
 
     public function edit(string $id_kegiatan){
@@ -155,7 +155,7 @@ class KegiatanController extends Controller
             'title'=>'Edit kegiatan'
         ];
         $activeMenu = 'kegiatan';
-        return view('kegiatan.edit', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
+        return view('admin.kegiatan.edit', ['breadcrumb'=>$breadcrumb, 'page'=>$page, 'activeMenu'=>$activeMenu, 'kegiatan'=>$kegiatan]);
     }
 
     public function update(Request $request, string $id_kegiatan){
@@ -188,7 +188,7 @@ class KegiatanController extends Controller
     public function edit_ajax(string $id)
     {
         $kegiatan = KegiatanModel::find($id);
-        return view('kegiatan.edit_ajax', ['kegiatan' => $kegiatan]);
+        return view('admin.kegiatan.edit_ajax', ['kegiatan' => $kegiatan]);
     }
 
     public function update_ajax(Request $request, $id)
@@ -247,7 +247,7 @@ class KegiatanController extends Controller
 
     public function confirm_ajax(string $id) {
         $kegiatan = KegiatanModel::find($id);
-        return view('kegiatan.confirm_ajax', ['kegiatan' => $kegiatan]);
+        return view('admin.kegiatan.confirm_ajax', ['kegiatan' => $kegiatan]);
     }
 
     public function delete_ajax(Request $request, string $id) {

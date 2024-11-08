@@ -24,7 +24,7 @@ class JenisPenggunaController extends Controller
 
         $activeMenu = 'jenis_pengguna';
         $jenis_pengguna = JenisPenggunaModel::all();
-        return view('jenis_pengguna.index', [
+        return view('admin.jenis_pengguna.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'jenis_pengguna' => $jenis_pengguna,
@@ -66,7 +66,7 @@ class JenisPenggunaController extends Controller
         ];
 
         $activeMenu = 'jenis_pengguna';
-        return view('jenis_pengguna.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'jenis_pengguna' => $jenis_pengguna, 'activeMenu' => $activeMenu]);
+        return view('admin.jenis_pengguna.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'jenis_pengguna' => $jenis_pengguna, 'activeMenu' => $activeMenu]);
     }
 
     public function show_ajax(string $id)
@@ -75,12 +75,12 @@ class JenisPenggunaController extends Controller
         $page = (object)[
             'title' => 'Detail Jenis Pengguna'
         ];
-        return view('jenis_pengguna.show_ajax', ['jenis_pengguna' => $jenis_pengguna, 'page' => $page]);
+        return view('admin.jenis_pengguna.show_ajax', ['jenis_pengguna' => $jenis_pengguna, 'page' => $page]);
     }
 
     public function create_ajax()
     {
-        return view('jenis_pengguna.create_ajax');
+        return view('admin.jenis_pengguna.create_ajax');
     }
 
     public function store_ajax(Request $request)
@@ -132,7 +132,7 @@ class JenisPenggunaController extends Controller
                 'message' => 'Data tidak ditemukan'
             ]);
         }
-        return view('jenis_pengguna.edit_ajax', ['jenis_pengguna' => $jenis_pengguna]);
+        return view('admin.jenis_pengguna.edit_ajax', ['jenis_pengguna' => $jenis_pengguna]);
     }
 
     public function update_ajax(Request $request, $id)
@@ -186,7 +186,7 @@ class JenisPenggunaController extends Controller
     public function confirm_ajax(string $id)
     {
         $jenis_pengguna = JenisPenggunaModel::find($id);
-        return view('jenis_pengguna.confirm_ajax', ['jenis_pengguna' => $jenis_pengguna]);
+        return view('admin.jenis_pengguna.confirm_ajax', ['jenis_pengguna' => $jenis_pengguna]);
     }
 
     public function delete_ajax(Request $request, $id)
@@ -210,7 +210,7 @@ class JenisPenggunaController extends Controller
     }
 
     public function import(){
-        return view('jenis_pengguna.import');
+        return view('admin.jenis_pengguna.import');
     }
 
     public function import_ajax(Request $request)
@@ -305,7 +305,7 @@ class JenisPenggunaController extends Controller
     {
         $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'jenis_kode', 'nama_jenis_pengguna', 'bobot')
             ->get();
-        $pdf = Pdf::loadView('jenis_pengguna.export_pdf', ['jenis_pengguna' => $jenis_pengguna]);
+        $pdf = Pdf::loadView('admin.jenis_pengguna.export_pdf', ['jenis_pengguna' => $jenis_pengguna]);
         $pdf->setPaper('a4', 'portrait');
         $pdf->setOption("isRemoteEnabled", true);
         $pdf->render();

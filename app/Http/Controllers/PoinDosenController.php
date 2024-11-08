@@ -18,7 +18,7 @@ class PoinDosenController extends Controller
         ];
         $activeMenu = 'poindosen';
 
-        return view('poindosen.index', ['breadcrumb'=> $breadcrumb, 'activeMenu' => $activeMenu]);
+        return view('admin.poindosen.index', ['breadcrumb'=> $breadcrumb, 'activeMenu' => $activeMenu]);
 
     }
 }

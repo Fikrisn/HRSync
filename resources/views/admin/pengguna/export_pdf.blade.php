@@ -76,7 +76,7 @@
             </td>
         </tr>
     </table>
-    <h3 class="text-center">Data Pengguna</h3>
+    <h3 class="text-center">LAPORAN DATA PENGGUNA</h3>
     <table class="border-all">
         <thead>
             <tr>

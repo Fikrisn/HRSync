@@ -28,7 +28,7 @@ class PenggunaController extends Controller
 
         $activeMenu = 'pengguna'; // Active menu set to pengguna
         $jenis_pengguna = JenisPenggunaModel::all(); // Get jenis_pengguna data for filtering
-        return view('pengguna.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'jenis_pengguna' => $jenis_pengguna]);
+        return view('admin.pengguna.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'jenis_pengguna' => $jenis_pengguna]);
     }
 
     public function list(Request $request)
@@ -65,7 +65,7 @@ class PenggunaController extends Controller
         $jenis_pengguna = JenisPenggunaModel::all();
         $activeMenu = 'pengguna';
 
-        return view('pengguna.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'jenis_pengguna' => $jenis_pengguna, 'activeMenu' => $activeMenu]);
+        return view('admin.pengguna.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'jenis_pengguna' => $jenis_pengguna, 'activeMenu' => $activeMenu]);
     }
 
     public function store(Request $request)
@@ -88,7 +88,7 @@ class PenggunaController extends Controller
             'id_jenis_pengguna' => $request->id_jenis_pengguna
         ]);
 
-        return redirect('/pengguna')->with('success', 'Data pengguna berhasil disimpan');
+        return redirect('/admin/pengguna')->with('success', 'Data pengguna berhasil disimpan');
     }
 
     public function show(string $id)
@@ -105,7 +105,7 @@ class PenggunaController extends Controller
         ];
 
         $activeMenu = 'pengguna';
-        return view('pengguna.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'pengguna' => $pengguna, 'activeMenu' => $activeMenu]);
+        return view('admin.pengguna.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'pengguna' => $pengguna, 'activeMenu' => $activeMenu]);
     }
 
     public function show_ajax(string $id)
@@ -114,14 +114,14 @@ class PenggunaController extends Controller
         $page = (object)[
             'title' => 'Detail Pengguna'
         ];
-        return view('pengguna.show_ajax', ['pengguna' => $pengguna, 'page' => $page]);
+        return view('admin.pengguna.show_ajax', ['pengguna' => $pengguna, 'page' => $page]);
     }
 
     public function edit_ajax(string $id)
     {
         $pengguna = PenggunaModel::find($id);
         $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'nama_jenis_pengguna')->get();
-        return view('pengguna.edit_ajax', ['pengguna' => $pengguna, 'jenis_pengguna' => $jenis_pengguna]);
+        return view('admin.pengguna.edit_ajax', ['pengguna' => $pengguna, 'jenis_pengguna' => $jenis_pengguna]);
     }
 
     public function update_ajax(Request $request, $id)
@@ -184,14 +184,14 @@ class PenggunaController extends Controller
             'password' => $request->password ? bcrypt($request->password) : $pengguna->password,
             'id_jenis_pengguna' => $request->id_jenis_pengguna
         ]);
-        return redirect('/pengguna')->with('success', 'Data pengguna berhasil diubah');
+        return redirect('/admin/pengguna')->with('success', 'Data pengguna berhasil diubah');
     }
 
     public function destroy(string $id)
     {
         $check = PenggunaModel::find($id);
         if (!$check) {
-            return redirect('/pengguna')->with('error', 'Data pengguna tidak ditemukan');
+            return redirect('/admin/pengguna')->with('error', 'Data pengguna tidak ditemukan');
         }
 
         try {
@@ -205,7 +205,7 @@ class PenggunaController extends Controller
     public function confirm_ajax(string $id)
     {
         $pengguna = PenggunaModel::find($id);
-        return view('pengguna.confirm_ajax', ['pengguna' => $pengguna]);
+        return view('admin.pengguna.confirm_ajax', ['pengguna' => $pengguna]);
     }
 
     public function delete_ajax(Request $request, $id)
@@ -231,7 +231,7 @@ class PenggunaController extends Controller
     public function create_ajax()
     {
         $jenis_pengguna = JenisPenggunaModel::select('id_jenis_pengguna', 'nama_jenis_pengguna')->get();
-        return view('pengguna.create_ajax')->with('jenis_pengguna', $jenis_pengguna);
+        return view('admin.pengguna.create_ajax')->with('jenis_pengguna', $jenis_pengguna);
     }
 
     public function store_ajax(Request $request)
@@ -270,7 +270,7 @@ class PenggunaController extends Controller
     }
 
     public function import(){
-            return view('pengguna.import');
+            return view('admin.pengguna.import');
         }
 
     public function import_ajax(Request $request){
@@ -371,7 +371,7 @@ class PenggunaController extends Controller
     {
         $pengguna = PenggunaModel::select('id_pengguna', 'username', 'nama', 'email', 'NIP')
             ->get();
-        $pdf = Pdf::loadView('pengguna.export_pdf', ['pengguna' => $pengguna]);
+        $pdf = Pdf::loadView('admin.pengguna.export_pdf', ['pengguna' => $pengguna]);
         $pdf->setPaper('a4', 'potrait');
         $pdf->setOption("isRemoteEnabled", true);
         $pdf->render();

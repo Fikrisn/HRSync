@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -42,20 +43,25 @@
         .font-11 {
             font-size: 11pt;
         }
-        .font-12 {
+        .font-12{
             font-size: 12pt;
         }
-        .font-13 {
+        .font-13{
             font-size: 13pt;
         }
-        .border-bottom-header {
+        .border-bottom-header{
             border-bottom: 1px solid;
         }
-        .border-all,
-        .border-all th,
-        .border-all td {
+        .border-all, .border-all th, .border-all td{
             border: 1px solid;
         }
+        .logo-image{
+            max-width: 100px; 
+            max-height: 100px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }    
     </style>
 </head>
 <body>
@@ -63,36 +69,34 @@
         <tr>
             <td width="15%" class="text-center"><img class="image" id="image" src="{{ asset('polinema.png') }}"></td>
             <td width="85%">
-                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN
-                    PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
-                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI
-                    MALANG</span>
-                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang
-                    65141</span>
-                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-
-                    105, 0341-404420, Fax. (0341) 404420</span>
+                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
+                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI MALANG</span>
+                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang 65141</span>
+                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-105, 0341-404420, Fax. (0341) 404420</span>
                 <span class="text-center d-block font-10">Laman: www.polinema.ac.id</span>
             </td>
         </tr>
     </table>
-    <h3 class="text-center">LAPORAN DATA KATEGORI</h4>
-        <table class="border-all">
-            <thead>
+    <h3 class="text-center">LAPORAN DATA JENIS PENGGUNA</h3>
+    <table class="border-all">
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th>Kode Jenis Pengguna</th>
+                <th>Nama Jenis Pengguna</th>
+                <th>Bobot</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($jenis_pengguna as $jp)
                 <tr>
-                    <th class="text-center">No</th>
-                    <th>Kode kategori</th>
-                    <th>Nama kategori</th>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td>{{ $jp->jenis_kode }}</td>
+                    <td>{{ $jp->nama_jenis_pengguna }}</td>
+                    <td>{{ $jp->bobot }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($kategori as $b)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $b->kategori_kode }}</td>
-                        <td>{{ $b->kategori_nama }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>

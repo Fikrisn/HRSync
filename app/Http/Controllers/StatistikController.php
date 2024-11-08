@@ -18,7 +18,7 @@ class StatistikController extends Controller
         ];
         $activeMenu = 'statistik';
 
-        return view('statistik.index', ['breadcrumb'=> $breadcrumb, 'activeMenu' => $activeMenu]);
+        return view('admin.statistik.index', ['breadcrumb'=> $breadcrumb, 'activeMenu' => $activeMenu]);
 
     }
 }

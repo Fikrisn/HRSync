@@ -24,7 +24,7 @@
                         @foreach ($statistik as $data)
                             <tr>
                                 <td>{{ $data->id_statistik }}</td>
-                                <td>{{ $data->kegiatan }}</td>
+                                <td>{{ $data->id_kegiatan }}</td>
                                 <td>{{ $data->jenis_pengguna }}</td>
                                 <td>{{ $data->pengguna }}</td>
                                 <td>{{ $data->saran }}</td>
